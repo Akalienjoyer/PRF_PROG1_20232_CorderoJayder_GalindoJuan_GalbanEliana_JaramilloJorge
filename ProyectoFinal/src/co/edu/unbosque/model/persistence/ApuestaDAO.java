@@ -2,23 +2,21 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-import co.edu.unbosque.model.SedeDTO;
-
+import co.edu.unbosque.model.ApuestaDTO;
 /**
- * Data Access Object de Sede.
+ * Data Access Object de Apuesta.
  * @author JorgeJ
- *
  */
+public class ApuestaDAO implements CRUDOperation{
 
-public class SedeDAO implements CRUDOperation{
-	private ArrayList<SedeDTO> sedes;
-	private final String SERIAL_FILENAME = "sedes.dat";
+	private ArrayList<ApuestaDTO> apuestas;
+	private final String SERIAL_FILENAME = "apuestas.dat";
 	
 	/**
-	 * Constructor que inicializa la lista sedes
+	 * Constructor que inicializa la lista apuestas
 	 */
-	public SedeDAO() {
-		sedes = new ArrayList<>();
+	public ApuestaDAO() {
+		apuestas = new ArrayList<>();
 		loadSerializable();
 	}
 	/**
@@ -29,39 +27,40 @@ public class SedeDAO implements CRUDOperation{
 	private void loadSerializable() {
 		if (FileHandler.serializableOpenAndReadFile(SERIAL_FILENAME) != null) {
 			Object temp = FileHandler.serializableOpenAndReadFile(SERIAL_FILENAME);
-			sedes = (ArrayList<SedeDTO>) temp;
+			apuestas = (ArrayList<ApuestaDTO>) temp;
 		} else {
-			sedes = new ArrayList<>();
+			apuestas= new ArrayList<>();
 		}
 	}
 	/**
 	 * Sobreescribe los datos serealizados con los datos de los objetos
-	 * en la lista sedes
+	 * en la lista apuestas
 	 */
 	public void writeSerializable() {
-		FileHandler.serializableOpenAndWriteFile(SERIAL_FILENAME, sedes);
+		FileHandler.serializableOpenAndWriteFile(SERIAL_FILENAME, apuestas);
 	}
-	
 	/**
-	 * Creacion de un objeto para ingresarlo en la lista sedes
+	 * Creacion de un objeto para ingresarlo en la lista apuestas
 	 * Toma como parametros los argumentos con los valores
-	 * de los atributos de un objeto Sede
+	 * de los atributos de un objeto apuesta
 	 */
 	@Override
 	public void create(String... args) {
-		SedeDTO temp = new SedeDTO();
-		temp.setUbicacion(args[0]);
-		temp.setEmpleados(Integer.parseInt(args[1]));
-		sedes.add(temp);
+		ApuestaDTO temp = new ApuestaDTO();
+		temp.setNombre(args[0]);
+		temp.setCedula(Long.parseLong(args[1]));
+		temp.setDiaSemana(args[2]);
+		temp.setValorApuesta(Double.parseDouble(args[3]));
+		apuestas.add(temp);
 		writeSerializable(); 
 	}
 	/**
-	 * Creacion de un objeto para ingresarlo en la lista sedes
+	 * Creacion de un objeto para ingresarlo en la lista apuestas
 	 * Toma como parametro un objeto para ingresar a la lista
 	 */
 	@Override
 	public void create(Object o) {
-		sedes.add((SedeDTO)o);
+		apuestas.add((ApuestaDTO)o);
 		writeSerializable();
 	}
 	/**
@@ -72,7 +71,7 @@ public class SedeDAO implements CRUDOperation{
 	public String readAll() {
 		String print = "";
 		int index = 0;
-		for (SedeDTO s : sedes) {
+		for (ApuestaDTO s : apuestas) {
 			print += "\n" + index + ": " + s.toString();
 			index++;
 		}
@@ -80,69 +79,71 @@ public class SedeDAO implements CRUDOperation{
 	}
 	/**
 	 * Update toma el indice index y llama al objeto de esa posicion
-	 * en la lista sedes. 
+	 * en la lista apuestas. 
 	 * Se toman los atributos de los objetos y se actualizan por los 
 	 * ingresados en los parametros de la funcion update, si no se 
 	 * modifica un atributo, este se queda intacto.
 	 */
 	@Override
 	public boolean update(int index, String... args) {
-		if(index<0||index>=sedes.size())
+		if(index<0||index>=apuestas.size())
 			return false;
 		else {
 			if(!args[0].isBlank()||!args[1].isEmpty())
-				sedes.get(index).setUbicacion(args[0]);
+				apuestas.get(index).setNombre(args[0]);
 			if(!args[1].isBlank()||!args[1].isEmpty())
-				sedes.get(index).setEmpleados(Integer.parseInt(args[1]));
+				apuestas.get(index).setCedula(Long.parseLong(args[1]));
+			if(!args[2].isBlank()||!args[2].isEmpty())
+				apuestas.get(index).setDiaSemana(args[2]);
+			if(!args[3].isBlank()||!args[3].isEmpty())
+				apuestas.get(index).setValorApuesta(Double.parseDouble(args[3]));
 		}
 		writeSerializable();
 		return true;
 	}
 	/**
-	 * Update toma el objeto o y lo busca en la lista sedes. 
+	 * Update toma el objeto o y lo busca en la lista apuestas. 
 	 * Se reemplaza el objeto en la posicion encontrada por el nuevo objeto o.
 	 */
 	@Override
 	public void update(Object o) {
 		int index = 0;
-		for (int i = 0; i < sedes.size(); i++) {
-			if (((SedeDTO) o).equals(sedes.get(i))) {
+		for (int i = 0; i < apuestas.size(); i++) {
+			if (((ApuestaDTO) o).equals(apuestas.get(i))) {
 				index = i;
 			}
 		}
-		sedes.set(index, (SedeDTO) o);
+		apuestas.set(index, (ApuestaDTO) o);
 		writeSerializable();
 	}
 	/**
 	 * Delete toma el indice index y elimina el objeto de esa posicion
-	 * en la lista Sedes
+	 * en la lista apuestas
 	 */
 	@Override
 	public boolean delete(int index) {
-		if (index < 0 || index >= sedes.size())
+		if (index < 0 || index >= apuestas.size())
 			return false;
 		else {
-			sedes.remove(index);
+			apuestas.remove(index);
 			writeSerializable();
 			return true;
 		}
 	}
 	/**
 	 * Delete toma el objeto y verifica si esta en la
-	 * en la lista sdes, si se encuentra en la lista
+	 * en la lista apuestas, si se encuentra en la lista
 	 * este es eliminado
 	 */
 	@Override
 	public boolean delete(Object o) {
 		if (o == null)
 			return false;
-		else if (sedes.remove((SedeDTO) o)) {
+		else if (apuestas.remove((ApuestaDTO) o)) {
 			writeSerializable();
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
-
 }

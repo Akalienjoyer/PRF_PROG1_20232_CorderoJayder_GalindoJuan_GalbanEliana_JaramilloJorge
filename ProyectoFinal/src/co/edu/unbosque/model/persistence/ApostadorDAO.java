@@ -11,7 +11,6 @@ import co.edu.unbosque.model.ApostadorDTO;
 
 public class ApostadorDAO implements CRUDOperation{
 	private ArrayList<ApostadorDTO> apostadores;
-	private final String FILENAME = "datosApostadores.csv";
 	private final String SERIAL_FILENAME = "apostadores.dat";
 	
 	/**

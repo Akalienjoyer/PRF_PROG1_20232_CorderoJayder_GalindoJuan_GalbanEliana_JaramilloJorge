@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
 /**
  * Clase que controla la apertura, lectura, y guardado de archivos.
@@ -17,9 +15,6 @@ import java.util.Scanner;
  *
  */
 public class FileHandler {
-	private static Scanner fileReader;
-	private static PrintWriter fileWriter;
-	private static File myFile;
 	// lectura serializados
 	private static FileInputStream fis;
 	private static ObjectInputStream ois;
@@ -97,55 +92,6 @@ public class FileHandler {
 		} catch (IOException e2) {
 			System.out.println("Problemas de escritura al abrir el archivo serializado.");
 			e2.printStackTrace();
-		}
-	}
-
-	/**
-	 * Abre y lee el archivo (no serializado) para extraer todo su contenido,
-	 * guardarlo en un String, y devolver este mismo.
-	 * 
-	 * @param fileName - Nombre del archivo CSV a buscar.
-	 * @return - Todo el contenido dentro del archivo CSV.
-	 */
-	public static String openAndReadFile(String fileName) {
-		myFile = new File(url + fileName);
-		try {
-			fileReader = new Scanner(myFile);
-		} catch (FileNotFoundException e) {
-			try {
-				myFile.createNewFile();
-			} catch (IOException e1) {
-				System.out.println("No hay permisos de escritura.");
-			}
-			System.out.println("El archivo no existia, se ha creado.");
-		}
-		String content = "";
-		while (fileReader.hasNext()) {
-			content += fileReader.nextLine() + "\n";
-		}
-		return content;
-	}
-
-	/**
-	 * Abre y guarda en el archivo (no serializado) todo el contenido que recibe la
-	 * funcion en el String.
-	 * 
-	 * @param fileName - Nombre del archivo CSV a buscar.
-	 * @param content  - Todo el contenido que se guardara dentro del archivo CSV.
-	 */
-	public static void openAndWriteFile(String fileName, String content) {
-		myFile = new File(url + fileName);
-		try {
-			if (!myFile.exists()) {
-				myFile.createNewFile();
-			}
-			fileWriter = new PrintWriter(myFile);
-			fileWriter.write(content);
-			fileWriter.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("No se encontro el archivo.");
-		} catch (IOException e1) {
-			System.out.println("No hay permisos de escritura.");
 		}
 	}
 }
