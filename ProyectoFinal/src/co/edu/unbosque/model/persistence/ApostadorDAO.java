@@ -53,6 +53,8 @@ public class ApostadorDAO implements CRUDOperation{
 		temp.setSede(args[2]);
 		temp.setDireccion(args[3]);
 		temp.setCelular(Long.parseLong(args[4]));
+		temp.setContraseña(args[5]);
+		temp.setUser(args[6]);
 		apostadores.add(temp);
 		writeSerializable(); 
 	}
@@ -91,7 +93,7 @@ public class ApostadorDAO implements CRUDOperation{
 		if(index<0||index>=apostadores.size())
 			return false;
 		else {
-			if(!args[0].isBlank()||!args[1].isEmpty())
+			if(!args[0].isBlank()||!args[0].isEmpty())
 				apostadores.get(index).setNombre(args[0]);
 			if(!args[1].isBlank()||!args[1].isEmpty())
 				apostadores.get(index).setCedula(Long.parseLong(args[1]));
@@ -101,6 +103,10 @@ public class ApostadorDAO implements CRUDOperation{
 				apostadores.get(index).setDireccion(args[3]);
 			if(!args[4].isBlank()||!args[4].isEmpty())
 				apostadores.get(index).setCelular(Long.parseLong(args[4]));
+			if(!args[5].isBlank()||!args[5].isEmpty())
+				apostadores.get(index).setContraseña(args[5]);
+			if(!args[6].isBlank()||!args[6].isEmpty())
+				apostadores.get(index).setUser(args[6]);
 		}
 		writeSerializable();
 		return true;
@@ -150,6 +156,52 @@ public class ApostadorDAO implements CRUDOperation{
 			return false;
 		}
 	}
-	
-
+	/**
+	 * Retorna la lista apostadores
+	 * @return apostadores - lista
+	 */
+	public ArrayList<ApostadorDTO> returnList(){
+		loadSerializable();
+		return apostadores;
+	}
+	/**
+	 * identifica al usuario que acaba de ingresar
+	 * exitosamente al programa
+	 * @param contraseña - String de seguridad
+	 * @param user - String de identificacion
+	 * @return Objeto apostador que acaba de ingresar
+	 */
+	public ApostadorDTO logIn(String user, String contraseña) {
+		for (ApostadorDTO o : apostadores) {
+			if(contraseña.equals(o.getContraseña())&&user.equals(o.getUser())) {
+				loadSerializable();
+				return o;
+			}
+		}
+		return null;
+	}
+	public boolean checkPass(String contraseña, String repContraseña) {
+		if(contraseña.equals(repContraseña)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public ApostadorDTO searchAndGet(String cedula) {
+		for (ApostadorDTO o : apostadores) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				return o;
+			}
+		}
+		return null;
+	}
+	public int getIndex(Object o) {
+		int index = 0;
+		for (int i = 0; i < apostadores.size(); i++) {
+			if (((ApostadorDTO) o).equals(apostadores.get(i))) {
+				index = i;
+			}
+		}
+		return index;
+}
 }

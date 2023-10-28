@@ -89,7 +89,7 @@ public class JuegoDAO implements CRUDOperation{
 		if(index<0||index>=juegos.size())
 			return false;
 		else {
-			if(!args[0].isBlank()||!args[1].isEmpty())
+			if(!args[0].isBlank()||!args[0].isEmpty())
 				juegos.get(index).setNombre(args[0]);
 			if(!args[1].isBlank()||!args[1].isEmpty())
 				juegos.get(index).setTipo(args[1]);

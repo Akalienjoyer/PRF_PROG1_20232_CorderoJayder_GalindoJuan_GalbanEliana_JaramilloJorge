@@ -1,8 +1,15 @@
 package co.edu.unbosque.controller;
 
+import java.util.Properties;
 import java.util.Scanner;
 
+import co.edu.unbosque.model.ApostadorDTO;
+import co.edu.unbosque.model.persistence.ApostadorDAO;
+import co.edu.unbosque.model.persistence.ApuestaBalotoDAO;
+import co.edu.unbosque.model.persistence.ApuestaChanceDAO;
 import co.edu.unbosque.model.persistence.ApuestaDAO;
+import co.edu.unbosque.model.persistence.ReciboDAO;
+
 
 /**
  * Controlador del aplicativo, conecta el modelo 
@@ -13,38 +20,29 @@ public class Controller {
 	/**
 	 * Instancias de clases y ventanas
 	 */
-	private ApuestaDAO apDao;
 	private Scanner sc;
+	private ApuestaChanceDAO apuestaChanceDAO;
+	private ApuestaBalotoDAO apuestaBalotoDAO;
+	private ApuestaDAO apuestaDAO;
+	private ApostadorDAO apostadorDAO;
+	private ReciboDAO reciboDAO;
 	/**
 	 * Constructor que inicializa las clases y ventanas
 	 */
 	public Controller() {
-		apDao = new ApuestaDAO();
 		sc = new Scanner(System.in);
+		apostadorDAO = new ApostadorDAO();
+		apuestaBalotoDAO = new ApuestaBalotoDAO();
+		apuestaChanceDAO = new ApuestaChanceDAO();
+		reciboDAO = new ReciboDAO();
+		apuestaDAO = new ApuestaDAO();
 	}
 	/**
 	 * Metodo que da inicio al aplicativo, visibiliza la 
 	 * primera ventana.
 	 */
 	public void run() {
-		/*String ubicacion = sc.nextLine();
-		String empl = sc.nextLine();
-		sDao.create(ubicacion, empl);
-		System.out.println(sDao.readAll());*/
 		
-		/*String nombre = sc.nextLine();
-		String cedula = sc.nextLine();
-		String sede = sc.nextLine();
-		String direccion = sc.nextLine();
-		String celular = sc.nextLine();
-		aDao.create(nombre,cedula,sede,direccion,celular);
-		System.out.println(aDao.readAll());*/
 		
-		String nombre = sc.nextLine();
-		String cedula = sc.nextLine();
-		String diaSemana = sc.nextLine();
-		String valorApuesta = sc.nextLine();
-		apDao.create(nombre,cedula,diaSemana,valorApuesta);
-		System.out.println(apDao.readAll());
 	}
 }

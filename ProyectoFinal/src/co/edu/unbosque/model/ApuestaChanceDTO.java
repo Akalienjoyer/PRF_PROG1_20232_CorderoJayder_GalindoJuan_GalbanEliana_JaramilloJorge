@@ -9,7 +9,7 @@ public class ApuestaChanceDTO extends ApuestaDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = 5709237510620916838L;
 	
-	private String nombre;
+	private String nombreLoto;
 	private int num1;
 	private int num2;
 	private int num3;
@@ -19,36 +19,36 @@ public class ApuestaChanceDTO extends ApuestaDTO implements Serializable{
 	
 	}
 
-	public ApuestaChanceDTO(String nombre, int num1, int num2, int num3, int num4) {
+	public ApuestaChanceDTO(String nombreLoto, int num1, int num2, int num3, int num4) {
 		super();
-		this.nombre = nombre;
+		this.nombreLoto = nombreLoto;
 		this.num1 = num1;
 		this.num2 = num2;
 		this.num3 = num3;
 		this.num4 = num4;
 	}
 
-	public ApuestaChanceDTO(String nombre, long cedula, String diaSemana, double valorApuesta) {
-		super(nombre, cedula, diaSemana, valorApuesta);
+	public ApuestaChanceDTO(String nombreLoto, long cedula, String diaSemana, double valorApuesta) {
+		super(nombreLoto, cedula, diaSemana, valorApuesta);
 		// TODO Auto-generated constructor stub
 	}
 
-	public ApuestaChanceDTO(String nombre, long cedula, String diaSemana, double valorApuesta, String nombre2, int num1,
-			int num2, int num3, int num4) {
-		super(nombre, cedula, diaSemana, valorApuesta);
-		nombre = nombre2;
+	public ApuestaChanceDTO(String nombreLoto, long cedula, String diaSemana, double valorApuesta,
+			String nombreLoto2, int num1, int num2, int num3, int num4) {
+		super(nombreLoto, cedula, diaSemana, valorApuesta);
+		nombreLoto = nombreLoto2;
 		this.num1 = num1;
 		this.num2 = num2;
 		this.num3 = num3;
 		this.num4 = num4;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNombreLoto() {
+		return nombreLoto;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreLoto(String nombreLoto) {
+		this.nombreLoto = nombreLoto;
 	}
 
 	public int getNum1() {
@@ -85,7 +85,7 @@ public class ApuestaChanceDTO extends ApuestaDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return super.toString()+"ApuestaChanceDTO [nombre=" + nombre + ", num1=" + num1 + ", num2=" + num2 + ", num3=" + num3 + ", num4="
+		return super.toString()+"ApuestaChanceDTO [nombreLoto=" + nombreLoto + ", num1=" + num1 + ", num2=" + num2 + ", num3=" + num3 + ", num4="
 				+ num4 + "]\n";
 	}
 	

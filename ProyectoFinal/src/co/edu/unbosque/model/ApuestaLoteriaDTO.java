@@ -9,7 +9,7 @@ public class ApuestaLoteriaDTO extends ApuestaDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = -4910096821176764081L;
 	
-	private String nombre;
+	private String nombreLoto;
 	private int num1;
 	private int num2;
 	private int num3;
@@ -21,9 +21,9 @@ public class ApuestaLoteriaDTO extends ApuestaDTO implements Serializable{
 	public ApuestaLoteriaDTO() {
 	
 	}
-	public ApuestaLoteriaDTO(String nombre, int num1, int num2, int num3, int num4, int ser1, int ser2, int ser3) {
+	public ApuestaLoteriaDTO(String nombreLoto, int num1, int num2, int num3, int num4, int ser1, int ser2, int ser3) {
 		super();
-		this.nombre = nombre;
+		this.nombreLoto = nombreLoto;
 		this.num1 = num1;
 		this.num2 = num2;
 		this.num3 = num3;
@@ -32,13 +32,17 @@ public class ApuestaLoteriaDTO extends ApuestaDTO implements Serializable{
 		this.ser2 = ser2;
 		this.ser3 = ser3;
 	}
-	public ApuestaLoteriaDTO(String nombre, long cedula, String diaSemana, double valorApuesta) {
-		super(nombre, cedula, diaSemana, valorApuesta);
+	
+	public ApuestaLoteriaDTO(String nombreLoto, long cedula, String diaSemana, double valorApuesta) {
+		super(nombreLoto, cedula, diaSemana, valorApuesta);
+		// TODO Auto-generated constructor stub
 	}
-	public ApuestaLoteriaDTO(String nombre, long cedula, String diaSemana, double valorApuesta, String nombre2,
-			int num1, int num2, int num3, int num4, int ser1, int ser2, int ser3) {
-		super(nombre, cedula, diaSemana, valorApuesta);
-		nombre = nombre2;
+	
+
+	public ApuestaLoteriaDTO(String nombreLoto, long cedula, String diaSemana, double valorApuesta,
+			String nombreLoto2, int num1, int num2, int num3, int num4, int ser1, int ser2, int ser3) {
+		super(nombreLoto, cedula, diaSemana, valorApuesta);
+		nombreLoto = nombreLoto2;
 		this.num1 = num1;
 		this.num2 = num2;
 		this.num3 = num3;
@@ -47,13 +51,12 @@ public class ApuestaLoteriaDTO extends ApuestaDTO implements Serializable{
 		this.ser2 = ser2;
 		this.ser3 = ser3;
 	}
-
-	public String getNombre() {
-		return nombre;
+	public String getNombreLoto() {
+		return nombreLoto;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreLoto(String nombreLoto) {
+		this.nombreLoto = nombreLoto;
 	}
 
 	public int getNum1() {
@@ -114,7 +117,7 @@ public class ApuestaLoteriaDTO extends ApuestaDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return super.toString()+"ApuestaLoteria [nombre=" + nombre + ", num1=" + num1 + ", num2=" + num2 + ", num3=" + num3 + ", num4="
+		return super.toString()+"ApuestaLoteria [nombreLoto=" + nombreLoto + ", num1=" + num1 + ", num2=" + num2 + ", num3=" + num3 + ", num4="
 				+ num4 + ", ser1=" + ser1 + ", ser2=" + ser2 + ", ser3=" + ser3 + "] \n";
 	}
 	

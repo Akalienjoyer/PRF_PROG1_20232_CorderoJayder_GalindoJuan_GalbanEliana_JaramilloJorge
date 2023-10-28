@@ -90,7 +90,7 @@ public class SedeDAO implements CRUDOperation{
 		if(index<0||index>=sedes.size())
 			return false;
 		else {
-			if(!args[0].isBlank()||!args[1].isEmpty())
+			if(!args[0].isBlank()||!args[0].isEmpty())
 				sedes.get(index).setUbicacion(args[0]);
 			if(!args[1].isBlank()||!args[1].isEmpty())
 				sedes.get(index).setEmpleados(Integer.parseInt(args[1]));

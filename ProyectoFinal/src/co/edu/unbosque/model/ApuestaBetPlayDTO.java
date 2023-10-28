@@ -20,12 +20,14 @@ public class ApuestaBetPlayDTO extends ApuestaDTO implements Serializable{
 		this.partido = partido;
 		this.resultado = resultado;
 	}
+	
 	public ApuestaBetPlayDTO(String nombre, long cedula, String diaSemana, double valorApuesta) {
 		super(nombre, cedula, diaSemana, valorApuesta);
 		// TODO Auto-generated constructor stub
 	}
-	public ApuestaBetPlayDTO(String nombre, long cedula, String diaSemana, double valorApuesta, String partido,
-			String resultado) {
+	
+	public ApuestaBetPlayDTO(String nombre, long cedula, String diaSemana, double valorApuesta,
+			String partido, String resultado) {
 		super(nombre, cedula, diaSemana, valorApuesta);
 		this.partido = partido;
 		this.resultado = resultado;

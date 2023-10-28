@@ -28,12 +28,14 @@ public class ApuestaBalotoDTO extends ApuestaDTO implements Serializable{
 		this.num5 = num5;
 		this.num6 = num6;
 	}
+	
 	public ApuestaBalotoDTO(String nombre, long cedula, String diaSemana, double valorApuesta) {
 		super(nombre, cedula, diaSemana, valorApuesta);
 		// TODO Auto-generated constructor stub
 	}
-	public ApuestaBalotoDTO(String nombre, long cedula, String diaSemana, double valorApuesta, int num1, int num2,
-			int num3, int num4, int num5, int num6) {
+	
+	public ApuestaBalotoDTO(String nombre, long cedula, String diaSemana, double valorApuesta, int num1,
+			int num2, int num3, int num4, int num5, int num6) {
 		super(nombre, cedula, diaSemana, valorApuesta);
 		this.num1 = num1;
 		this.num2 = num2;
