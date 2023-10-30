@@ -156,7 +156,7 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 	 * @param cedula - valor a comparar
 	 * @return String con los datos de las apuestas unicas del usuario
 	 */
-	public String getSuperastro(String cedula) {
+	public String getBetPlay(String cedula) {
 		ArrayList<ApuestaBetPlayDTO> propBetPlays = new ArrayList<>();
 		for (ApuestaBetPlayDTO o : betPlays) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
@@ -169,8 +169,35 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 			print += "\n" + index + ": " + s.toString();
 			index++;
 		}
-		loadSerializable();
+		writeSerializable();
 		return print;
 	}
+	public ApuestaBetPlayDTO getThisBaloto(int index, String cedula) {
+		ArrayList<ApuestaBetPlayDTO> propBetPlays = new ArrayList<>();
+		for (ApuestaBetPlayDTO o : betPlays) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propBetPlays.add(o);
+			}
+		}
+		return propBetPlays.get(index);
+	}
 	
+	public ArrayList<ApuestaBetPlayDTO> returnPropLoto(String cedula){
+		ArrayList<ApuestaBetPlayDTO> propBetPlays = new ArrayList<>();
+		for (ApuestaBetPlayDTO o : betPlays) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propBetPlays.add(o);
+			}
+		}
+		return propBetPlays;
+	}
+	public int checkValor(String valor, double saldo) {
+			if(Double.parseDouble(valor) < 200) {
+				return 0;
+			}
+			if(Double.parseDouble(valor)>saldo) {
+				return 1;
+			}
+			return 2;
+	}
 }

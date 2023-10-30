@@ -1,9 +1,14 @@
 package co.edu.unbosque.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ReciboDTO {
+public class ReciboDTO implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7577082489954401088L;
 	private long Cedula;
 	private ArrayList<ApuestaDTO> apuestas;
 	
@@ -35,7 +40,7 @@ public class ReciboDTO {
 
 	@Override
 	public String toString() {
-		return "ReciboDTO [Cedula=" + Cedula + ", apuestas=" + apuestas + "]";
+		return "ReciboDTO [Apuestas=" + apuestas + "]";
 	}
 	
 }

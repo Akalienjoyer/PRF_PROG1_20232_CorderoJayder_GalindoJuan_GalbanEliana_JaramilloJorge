@@ -53,9 +53,7 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 		temp.setNum2(Integer.parseInt(args[6]));
 		temp.setNum3(Integer.parseInt(args[7]));
 		temp.setNum4(Integer.parseInt(args[8]));
-		temp.setSer1(Integer.parseInt(args[9]));
-		temp.setSer2(Integer.parseInt(args[10]));
-		temp.setSer3(Integer.parseInt(args[11]));
+		temp.setSer(Integer.parseInt(args[9]));
 		loterias.add(temp);
 		writeSerializable(); 
 	}
@@ -113,11 +111,7 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 			if(!args[8].isBlank()||!args[8].isEmpty())
 				loterias.get(index).setNum4(Integer.parseInt(args[8]));
 			if(!args[9].isBlank()||!args[9].isEmpty())
-				loterias.get(index).setSer1(Integer.parseInt(args[9]));
-			if(!args[10].isBlank()||!args[10].isEmpty())
-				loterias.get(index).setSer2(Integer.parseInt(args[9]));
-			if(!args[11].isBlank()||!args[11].isEmpty())
-				loterias.get(index).setSer3(Integer.parseInt(args[9]));
+				loterias.get(index).setSer(Integer.parseInt(args[9]));
 		}
 		writeSerializable();
 		return true;
@@ -174,7 +168,7 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 	 * @param cedula - valor a comparar
 	 * @return String con los datos de las apuestas unicas del usuario
 	 */
-	public String getSuperastro(String cedula) {
+	public String getLoteria(String cedula) {
 		ArrayList<ApuestaLoteriaDTO> propLoterias = new ArrayList<>();
 		for (ApuestaLoteriaDTO o : loterias) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
@@ -187,7 +181,35 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 			print += "\n" + index + ": " + s.toString();
 			index++;
 		}
-		loadSerializable();
+		writeSerializable();
 		return print;
+	}
+	public ApuestaLoteriaDTO getThisLoteria(int index, String cedula) {
+		ArrayList<ApuestaLoteriaDTO> propLoterias = new ArrayList<>();
+		for (ApuestaLoteriaDTO o : loterias) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propLoterias.add(o);
+			}
+		}
+		return propLoterias.get(index);
+	}
+	
+	public ArrayList<ApuestaLoteriaDTO> returnPropLoto(String cedula){
+		ArrayList<ApuestaLoteriaDTO> propLoterias = new ArrayList<>();
+		for (ApuestaLoteriaDTO o : loterias) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propLoterias.add(o);
+			}
+		}
+		return propLoterias;
+	}
+	public int checkValor(String valor, double saldo) {
+			if(Double.parseDouble(valor) < 200) {
+				return 0;
+			}
+			if(Double.parseDouble(valor)>saldo) {
+				return 1;
+			}
+			return 2;
 	}
 }

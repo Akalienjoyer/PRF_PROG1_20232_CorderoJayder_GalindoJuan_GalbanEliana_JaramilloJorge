@@ -147,7 +147,7 @@ public class ReciboDAO implements CRUDOperation{
 		}
 	}
 	/**
-	 * Retorna la lista apostadores
+	 * Retorna la lista recibos
 	 * @return apostadores - lista
 	 */
 	public ArrayList<ReciboDTO> returnList(){
@@ -161,7 +161,7 @@ public class ReciboDAO implements CRUDOperation{
 	 * @param cedula - valor a comparar
 	 * @return String con los datos de los recibos unicos del usuario
 	 */
-	public String getRecibos(String cedula) {
+	public String getAllRecibos(String cedula) {
 		ArrayList<ReciboDTO> propRecibos = new ArrayList<>();
 		for (ReciboDTO o : recibos) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
@@ -174,7 +174,16 @@ public class ReciboDAO implements CRUDOperation{
 			print += "\n" + index + ": " + s.toString();
 			index++;
 		}
-		writeSerializable();
+		return print;
+	}
+	public String getLastRecibo(String cedula) {
+		ArrayList<ReciboDTO> propRecibos = new ArrayList<>();
+		for (ReciboDTO o : recibos) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propRecibos.add(o);
+			}
+		}
+		String print = propRecibos.get(propRecibos.size()-1).toString();
 		return print;
 	}
 }

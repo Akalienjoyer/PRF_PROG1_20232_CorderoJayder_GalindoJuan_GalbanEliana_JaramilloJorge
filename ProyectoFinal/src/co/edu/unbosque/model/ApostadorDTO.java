@@ -19,6 +19,7 @@ public class ApostadorDTO implements Serializable{
 	private long celular;
 	private String contraseña;
 	private String user;
+	private double saldo;
 	
 	/**
 	 * Constructor sin parametros
@@ -30,7 +31,7 @@ public class ApostadorDTO implements Serializable{
 	 * 
 	 * Constructor con parametros propios
 	 */
-	public ApostadorDTO(String nombre, long cedula, String sede, String direccion, long celular, String contraseña, String user) {
+	public ApostadorDTO(String nombre, long cedula, String sede, String direccion, long celular, String contraseña, String user, double saldo) {
 		super();
 		this.nombre = nombre;
 		this.cedula = cedula;
@@ -39,6 +40,7 @@ public class ApostadorDTO implements Serializable{
 		this.celular = celular;
 		this.contraseña = contraseña;
 		this.user = user;
+		this.saldo = saldo;
 	}
 	/**
 	 * Getters y Setters
@@ -46,6 +48,12 @@ public class ApostadorDTO implements Serializable{
 	
 	public String getNombre() {
 		return nombre;
+	}
+	public double getSaldo() {
+		return saldo;
+	}
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 	public String getUser() {
 		return user;
@@ -91,7 +99,7 @@ public class ApostadorDTO implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "ApostadorDTO [nombre=" + nombre + ", cedula=" + cedula + ", sede=" + sede + ", direccion=" + direccion
+		return "ApostadorDTO [nombre=" + nombre + ", cedula=" + cedula +", Saldo=" + saldo + ", sede=" + sede + ", direccion=" + direccion
 				+ ", celular=" + celular + "]\n ";
 	}
 	

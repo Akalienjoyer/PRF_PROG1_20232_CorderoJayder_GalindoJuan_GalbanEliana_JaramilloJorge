@@ -2,6 +2,8 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
+import co.edu.unbosque.model.ApostadorDTO;
+import co.edu.unbosque.model.ApuestaLoteriaDTO;
 import co.edu.unbosque.model.JuegoDTO;
 
 /**
@@ -144,4 +146,54 @@ public class JuegoDAO implements CRUDOperation{
 			return false;
 		}
 	}
+	public int[] doLotery(ApostadorDTO currentUser, ApuestaLoteriaDTO currentLoto) {
+	
+		int newSaldo = 0;
+		int cif1 = (int) (Math.random() * 9 + 1), cif2 = (int) (Math.random() * 9 + 1),
+				cif3 = (int) (Math.random() * 9 + 1), cif4 = (int) (Math.random() * 9 + 1);
+
+		int dig1 = currentLoto.getNum1(), dig2 = currentLoto.getNum2(), dig3 = currentLoto.getNum3(), 
+				dig4 = currentLoto.getNum4();
+
+		while (true) {
+			if (cif1 == dig1 && cif2 == dig2 && cif3 == dig3 && cif4 == dig4) {
+				 newSaldo += 2000;
+			}
+			if (cif1 == dig1 || cif1 == dig2 || cif1 == dig3 || cif1 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif2 == dig1 || cif2 == dig2 || cif2 == dig3 || cif2 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif3 == dig1 || cif3 == dig2 || cif3 == dig3 || cif3 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif4 == dig1 || cif4 == dig2 || cif4 == dig3 || cif4 == dig4) {
+				newSaldo += 100;
+			}
+			break;
+		}
+		
+			int max = 999, min = 100;
+			int ser1 = (int) (Math.random() * (max - min + 1) + min),
+					ser2 = (int) (Math.random() * (max - min + 1) + min),
+					ser3 = (int) (Math.random() * (max - min + 1) + min);
+
+			if (currentLoto.getSer() == ser1 || currentLoto.getSer() == ser2 || currentLoto.getSer() == ser3) {
+				newSaldo += 2000;
+		
+	}
+			int[] data = new int[8];
+			data[0] = cif1;
+			data[1] = cif2;
+			data[2] = cif3;
+			data[3] = cif4;
+			data[4] = ser1;
+			data[5] = ser2;
+			data[6] = ser3;
+			data[7] = newSaldo;
+			writeSerializable();
+			
+	return data;
+}
 }

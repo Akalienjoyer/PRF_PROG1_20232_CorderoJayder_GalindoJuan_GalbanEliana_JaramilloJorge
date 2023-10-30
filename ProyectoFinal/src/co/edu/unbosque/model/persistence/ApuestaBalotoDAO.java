@@ -167,7 +167,7 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 	 * @param cedula - valor a comparar
 	 * @return String con los datos de las apuestas unicas del usuario
 	 */
-	public String getSuperastro(String cedula) {
+	public String getBaloto(String cedula) {
 		ArrayList<ApuestaBalotoDTO> propBalotos = new ArrayList<>();
 		for (ApuestaBalotoDTO o : balotos) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
@@ -182,5 +182,33 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 		}
 		writeSerializable();
 		return print;
+	}
+	public ApuestaBalotoDTO getThisBaloto(int index, String cedula) {
+		ArrayList<ApuestaBalotoDTO> propBalotos = new ArrayList<>();
+		for (ApuestaBalotoDTO o : balotos) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propBalotos.add(o);
+			}
+		}
+		return propBalotos.get(index);
+	}
+	
+	public ArrayList<ApuestaBalotoDTO> returnPropLoto(String cedula){
+		ArrayList<ApuestaBalotoDTO> propBalotos = new ArrayList<>();
+		for (ApuestaBalotoDTO o : balotos) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propBalotos.add(o);
+			}
+		}
+		return propBalotos;
+	}
+	public int checkValor(String valor, double saldo) {
+			if(Double.parseDouble(valor) < 200) {
+				return 0;
+			}
+			if(Double.parseDouble(valor)>saldo) {
+				return 1;
+			}
+			return 2;
 	}
 }

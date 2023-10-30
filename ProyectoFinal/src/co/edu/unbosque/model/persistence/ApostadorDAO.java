@@ -55,6 +55,7 @@ public class ApostadorDAO implements CRUDOperation{
 		temp.setCelular(Long.parseLong(args[4]));
 		temp.setContraseña(args[5]);
 		temp.setUser(args[6]);
+		temp.setSaldo(0);
 		apostadores.add(temp);
 		writeSerializable(); 
 	}
@@ -161,7 +162,7 @@ public class ApostadorDAO implements CRUDOperation{
 	 * @return apostadores - lista
 	 */
 	public ArrayList<ApostadorDTO> returnList(){
-		loadSerializable();
+		writeSerializable();
 		return apostadores;
 	}
 	/**
@@ -174,7 +175,6 @@ public class ApostadorDAO implements CRUDOperation{
 	public ApostadorDTO logIn(String user, String contraseña) {
 		for (ApostadorDTO o : apostadores) {
 			if(contraseña.equals(o.getContraseña())&&user.equals(o.getUser())) {
-				loadSerializable();
 				return o;
 			}
 		}
@@ -203,5 +203,14 @@ public class ApostadorDAO implements CRUDOperation{
 			}
 		}
 		return index;
-}
+	}
+	public void actualizarSaldo(double plusSaldo, String cedula) {
+		for (int i = 0; i < apostadores.size(); i++) {
+			if (Long.parseLong(cedula)==apostadores.get(i).getCedula()) {
+				apostadores.get(i).setSaldo(plusSaldo+apostadores.get(i).getSaldo());
+			}
+		}
+		writeSerializable();
+		
+	}
 }

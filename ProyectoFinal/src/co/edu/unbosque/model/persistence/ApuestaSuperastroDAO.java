@@ -178,7 +178,35 @@ public class ApuestaSuperastroDAO implements CRUDOperation{
 			print += "\n" + index + ": " + s.toString();
 			index++;
 		}
-		loadSerializable();
+		writeSerializable();
 		return print;
+	}
+	public ApuestaSuperastroDTO getThisBaloto(int index, String cedula) {
+		ArrayList<ApuestaSuperastroDTO> propSuperastros = new ArrayList<>();
+		for (ApuestaSuperastroDTO o : superastros) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propSuperastros.add(o);
+			}
+		}
+		return propSuperastros.get(index);
+	}
+	
+	public ArrayList<ApuestaSuperastroDTO> returnPropLoto(String cedula){
+		ArrayList<ApuestaSuperastroDTO> propSuperastros = new ArrayList<>();
+		for (ApuestaSuperastroDTO o : superastros) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propSuperastros.add(o);
+			}
+		}
+		return propSuperastros;
+	}
+	public int checkValor(String valor, double saldo) {
+			if(Double.parseDouble(valor) < 200) {
+				return 0;
+			}
+			if(Double.parseDouble(valor)>saldo) {
+				return 1;
+			}
+			return 2;
 	}
 }
