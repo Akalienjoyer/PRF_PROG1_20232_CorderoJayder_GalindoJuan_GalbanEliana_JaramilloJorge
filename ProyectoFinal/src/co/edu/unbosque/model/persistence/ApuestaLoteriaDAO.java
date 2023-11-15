@@ -7,7 +7,7 @@ import co.edu.unbosque.model.ApuestaLoteriaDTO;
 public class ApuestaLoteriaDAO implements CRUDOperation{
 
 	ArrayList<ApuestaLoteriaDTO> loterias;
-	private final String SERIAL_FILENAME = "apuestas-superastro.dat";
+	private final String SERIAL_FILENAME = "apuestas-loteria.dat";
 	
 	/**
 	 * Constructor que inicializa la lista loterias
@@ -192,6 +192,17 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 			}
 		}
 		return propLoterias.get(index);
+	}
+	
+	public String getLastLoteria(String cedula) {
+		ArrayList<ApuestaLoteriaDTO> propLoterias = new ArrayList<>();
+		for (ApuestaLoteriaDTO o : loterias) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propLoterias.add(o);
+			}
+		}
+		String print = "-> "+propLoterias.get(propLoterias.size()-1).toString();
+		return print;
 	}
 	
 	public ArrayList<ApuestaLoteriaDTO> returnPropLoto(String cedula){

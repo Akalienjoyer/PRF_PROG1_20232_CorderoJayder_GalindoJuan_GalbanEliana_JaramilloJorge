@@ -3,7 +3,11 @@ package co.edu.unbosque.model.persistence;
 import java.util.ArrayList;
 
 import co.edu.unbosque.model.ApostadorDTO;
+import co.edu.unbosque.model.ApuestaBalotoDTO;
+import co.edu.unbosque.model.ApuestaBetPlayDTO;
+import co.edu.unbosque.model.ApuestaChanceDTO;
 import co.edu.unbosque.model.ApuestaLoteriaDTO;
+import co.edu.unbosque.model.ApuestaSuperastroDTO;
 import co.edu.unbosque.model.JuegoDTO;
 
 /**
@@ -14,12 +18,16 @@ public class JuegoDAO implements CRUDOperation{
 
 	private ArrayList<JuegoDTO> juegos;
 	private final String SERIAL_FILENAME = "juegos.dat";
-	
+	private String[] signos = { "Aries", "Acuario", "Sagitario", "Escorpio", "Leo", "Libra", "Virgo", "Piscis", "Geminis",
+			"Tauro", "Cancer", "Capricornio" };
+	private String[] betResults = {"Empate", "Local","Visitante"};
+	private int[] resultados;
 	/**
 	 * Constructor que inicializa la lista juegos
 	 */
 	public JuegoDAO() {
 		juegos = new ArrayList<>();
+		resultados = new int[4];
 		loadSerializable();
 	}
 	/**
@@ -146,9 +154,8 @@ public class JuegoDAO implements CRUDOperation{
 			return false;
 		}
 	}
-	public int[] doLotery(ApostadorDTO currentUser, ApuestaLoteriaDTO currentLoto) {
-	
-		int newSaldo = 0;
+	public String[] doLotery(ApuestaLoteriaDTO currentLoto) {
+		double newSaldo = 0;
 		int cif1 = (int) (Math.random() * 9 + 1), cif2 = (int) (Math.random() * 9 + 1),
 				cif3 = (int) (Math.random() * 9 + 1), cif4 = (int) (Math.random() * 9 + 1);
 
@@ -183,17 +190,168 @@ public class JuegoDAO implements CRUDOperation{
 				newSaldo += 2000;
 		
 	}
-			int[] data = new int[8];
-			data[0] = cif1;
-			data[1] = cif2;
-			data[2] = cif3;
-			data[3] = cif4;
-			data[4] = ser1;
-			data[5] = ser2;
-			data[6] = ser3;
-			data[7] = newSaldo;
+			String[] data = new String[8];
+			data[0] = Integer.toString(cif1); 
+			data[1] = Integer.toString(cif2); 
+			data[2] = Integer.toString(cif3); 
+			data[3] = Integer.toString(cif4); 
+			data[4] = Integer.toString(ser1); 
+			data[5] = Integer.toString(ser2); 
+			data[6] = Integer.toString(ser3); 
+			data[7] = Double.toString(newSaldo); 
+			
+			resultados[0] = cif1;
+			resultados[1] = cif2;
+			resultados[2] = cif3;
+			resultados[3] = cif4;
 			writeSerializable();
 			
 	return data;
-}
+	}
+	public String[] doSuperastro(ApuestaSuperastroDTO currentSuper) {
+		double newSaldo = 0;
+		int cif1 = (int) (Math.random() * 9 + 1), cif2 = (int) (Math.random() * 9 + 1),
+				cif3 = (int) (Math.random() * 9 + 1), cif4 = (int) (Math.random() * 9 + 1);
+
+		int dig1 = currentSuper.getNum1(), dig2 = currentSuper.getNum2(), dig3 = currentSuper.getNum3(), 
+				dig4 = currentSuper.getNum4();
+
+		while (true) {
+			if (cif1 == dig1 && cif2 == dig2 && cif3 == dig3 && cif4 == dig4) {
+				 newSaldo += 2000;
+			}
+			if (cif1 == dig1 || cif1 == dig2 || cif1 == dig3 || cif1 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif2 == dig1 || cif2 == dig2 || cif2 == dig3 || cif2 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif3 == dig1 || cif3 == dig2 || cif3 == dig3 || cif3 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif4 == dig1 || cif4 == dig2 || cif4 == dig3 || cif4 == dig4) {
+				newSaldo += 100;
+			}
+			break;
+		}
+		
+		int sigRan = (int) (Math.random() * 12);
+		String signoAleatorio = signos[sigRan];
+		if (currentSuper.getSigno().equalsIgnoreCase(signoAleatorio)) {
+			newSaldo += 500;
+			
+	}
+		String[] data = new String[6];
+		data[0] = Integer.toString(cif1); 
+		data[1] = Integer.toString(cif2); 
+		data[2] = Integer.toString(cif3); 
+		data[3] = Integer.toString(cif4); 
+		data[4] = signoAleatorio;
+		data[5] = Double.toString(newSaldo); 
+		writeSerializable();
+		
+		return data;
+	}
+	public String[] doBaloto(ApuestaBalotoDTO currentBaloto) {
+		double newSaldo = 0;
+		int cif1 = (int) (Math.random() * 45 + 1), cif2 = (int) (Math.random() * 45 + 1),
+				cif3 = (int) (Math.random() * 45 + 1), cif4 = (int) (Math.random() * 45 + 1),
+				cif5 = (int) (Math.random() * 45 + 1), cif6 = (int) (Math.random() * 45 + 1);
+
+		int dig1 = currentBaloto.getNum1(), dig2 = currentBaloto.getNum2(), dig3 = currentBaloto.getNum3(),
+				dig4 = currentBaloto.getNum4(), dig5 = currentBaloto.getNum5(), dig6 = currentBaloto.getNum6();
+
+		while (true) {
+			if (cif1 == dig1 && cif2 == dig2 && cif3 == dig3 && cif4 == dig4 && cif5 == dig5 && cif5 == dig5) {
+				newSaldo += 2000;
+			}
+			if (cif1 == dig1 || cif1 == dig2 || cif1 == dig3 || cif1 == dig4 || cif1 == dig5 || cif1 == dig6) {
+				newSaldo += 100;
+			}
+			if (cif2 == dig1 || cif2 == dig2 || cif2 == dig3 || cif2 == dig4 || cif2 == dig5 || cif2 == dig6) {
+				newSaldo += 100;
+			}
+			if (cif3 == dig1 || cif3 == dig2 || cif3 == dig3 || cif3 == dig4 || cif3 == dig5 || cif3 == dig6) {
+				newSaldo += 100;
+			}
+			if (cif4 == dig1 || cif4 == dig2 || cif4 == dig3 || cif4 == dig4 || cif4 == dig5 || cif4 == dig6) {
+				newSaldo += 100;
+			}
+			if (cif5 == dig1 || cif5 == dig2 || cif5 == dig3 || cif5 == dig4 || cif5 == dig5 || cif5 == dig6) {
+				newSaldo += 100;
+			}
+			if (cif6 == dig1 || cif6 == dig2 || cif6 == dig3 || cif6 == dig4 || cif6 == dig5 || cif6 == dig6) {
+				newSaldo += 100;
+			}
+			break;
+		}
+		String[] data = new String[7];
+		data[0] = Integer.toString(cif1); 
+		data[1] = Integer.toString(cif2); 
+		data[2] = Integer.toString(cif3); 
+		data[3] = Integer.toString(cif4);
+		data[4] = Integer.toString(cif5);
+		data[5] = Integer.toString(cif6);
+		data[6] = Double.toString(newSaldo); 
+		writeSerializable();
+		
+		return data;
+	}
+	public String[] doChance(ApuestaChanceDTO currentChance) {
+		double newSaldo = 0;
+		int cif1 = resultados[0], cif2 = resultados[1],
+				cif3 = resultados[2], cif4 = resultados[3];
+
+		int dig1 = currentChance.getNum1(), dig2 = currentChance.getNum2(), dig3 = currentChance.getNum3(), 
+				dig4 = currentChance.getNum4();
+
+		while (true) {
+			if (cif1 == dig1 && cif2 == dig2 && cif3 == dig3 && cif4 == dig4) {
+				 newSaldo += 2000;
+			}
+			if (cif1 == dig1 || cif1 == dig2 || cif1 == dig3 || cif1 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif2 == dig1 || cif2 == dig2 || cif2 == dig3 || cif2 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif3 == dig1 || cif3 == dig2 || cif3 == dig3 || cif3 == dig4) {
+				newSaldo += 100;
+			}
+			if (cif4 == dig1 || cif4 == dig2 || cif4 == dig3 || cif4 == dig4) {
+				newSaldo += 100;
+			}
+			break;
+		}
+		String[] data = new String[5];
+		data[0] = Integer.toString(cif1); 
+		data[1] = Integer.toString(cif2); 
+		data[2] = Integer.toString(cif3); 
+		data[3] = Integer.toString(cif4); 
+		data[4] = Double.toString(newSaldo); 
+		writeSerializable();
+		return data;
+	}
+	public String[] doBetPlay(ApuestaBetPlayDTO currentBetPlay) {
+		double newSaldo = 0;
+		int res = (int) (Math.random() * 3);
+		String resultado = betResults[res];
+		if(currentBetPlay.getResultado().equals(resultado)) {
+			newSaldo+=500;
+		}
+		String[] data = new String[3];
+		data[0] = resultado;
+		data[1] = currentBetPlay.getPartido();
+		data[2] = Double.toString(newSaldo);
+		return data;
+	}
+	public String showGameGudget(String game) {
+		String print = "";
+		for (JuegoDTO o : juegos) {
+			if(o.getTipo().equals(game)) {
+				print+=o.getPresupuesto();
+			}
+		}
+		return print;
+	}
 }

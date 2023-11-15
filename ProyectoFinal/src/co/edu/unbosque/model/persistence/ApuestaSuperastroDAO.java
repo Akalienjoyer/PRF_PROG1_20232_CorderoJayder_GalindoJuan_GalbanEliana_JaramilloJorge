@@ -2,6 +2,7 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
+import co.edu.unbosque.model.ApuestaChanceDTO;
 import co.edu.unbosque.model.ApuestaSuperastroDTO;
 
 public class ApuestaSuperastroDAO implements CRUDOperation{
@@ -181,7 +182,7 @@ public class ApuestaSuperastroDAO implements CRUDOperation{
 		writeSerializable();
 		return print;
 	}
-	public ApuestaSuperastroDTO getThisBaloto(int index, String cedula) {
+	public ApuestaSuperastroDTO getThisSuperastro(int index, String cedula) {
 		ArrayList<ApuestaSuperastroDTO> propSuperastros = new ArrayList<>();
 		for (ApuestaSuperastroDTO o : superastros) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
@@ -191,7 +192,18 @@ public class ApuestaSuperastroDAO implements CRUDOperation{
 		return propSuperastros.get(index);
 	}
 	
-	public ArrayList<ApuestaSuperastroDTO> returnPropLoto(String cedula){
+	public String getLastSuperastro(String cedula) {
+		ArrayList<ApuestaSuperastroDTO> propSuperastros = new ArrayList<>();
+		for (ApuestaSuperastroDTO o : superastros) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propSuperastros.add(o);
+			}
+		}
+		String print = "-> "+propSuperastros.get(propSuperastros.size()-1).toString();
+		return print;
+	}
+	
+	public ArrayList<ApuestaSuperastroDTO> returnPropSuperastro(String cedula){
 		ArrayList<ApuestaSuperastroDTO> propSuperastros = new ArrayList<>();
 		for (ApuestaSuperastroDTO o : superastros) {
 			if(Long.parseLong(cedula)==o.getCedula()) {

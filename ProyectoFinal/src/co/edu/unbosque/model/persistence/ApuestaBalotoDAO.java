@@ -3,6 +3,7 @@ package co.edu.unbosque.model.persistence;
 import java.util.ArrayList;
 
 import co.edu.unbosque.model.ApuestaBalotoDTO;
+import co.edu.unbosque.model.ApuestaLoteriaDTO;
 
 public class ApuestaBalotoDAO implements CRUDOperation{
 	private ArrayList<ApuestaBalotoDTO> balotos;
@@ -191,6 +192,17 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 			}
 		}
 		return propBalotos.get(index);
+	}
+	
+	public String getLastBaloto(String cedula) {
+		ArrayList<ApuestaBalotoDTO> propBalotos = new ArrayList<>();
+		for (ApuestaBalotoDTO o : balotos) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propBalotos.add(o);
+			}
+		}
+		String print = "-> "+propBalotos.get(propBalotos.size()-1).toString();
+		return print;
 	}
 	
 	public ArrayList<ApuestaBalotoDTO> returnPropLoto(String cedula){

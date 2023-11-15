@@ -2,12 +2,13 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
+import co.edu.unbosque.model.ApuestaBalotoDTO;
 import co.edu.unbosque.model.ApuestaBetPlayDTO;
 
 public class ApuestaBetPlayDAO implements CRUDOperation{
 
 	private ArrayList<ApuestaBetPlayDTO> betPlays;
-	private final String SERIAL_FILENAME = "apuestas-chance.dat";
+	private final String SERIAL_FILENAME = "apuestas-betplay.dat";
 	
 	/**
 	 * Constructor que inicializa la lista betPlays
@@ -172,7 +173,7 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 		writeSerializable();
 		return print;
 	}
-	public ApuestaBetPlayDTO getThisBaloto(int index, String cedula) {
+	public ApuestaBetPlayDTO getThisBetPlay(int index, String cedula) {
 		ArrayList<ApuestaBetPlayDTO> propBetPlays = new ArrayList<>();
 		for (ApuestaBetPlayDTO o : betPlays) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
@@ -182,7 +183,18 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 		return propBetPlays.get(index);
 	}
 	
-	public ArrayList<ApuestaBetPlayDTO> returnPropLoto(String cedula){
+	public String getLastBetPlay(String cedula) {
+		ArrayList<ApuestaBetPlayDTO> propBetPlays = new ArrayList<>();
+		for (ApuestaBetPlayDTO o : betPlays) {
+			if(Long.parseLong(cedula)==o.getCedula()) {
+				propBetPlays.add(o);
+			}
+		}
+		String print = "-> "+propBetPlays.get(propBetPlays.size()-1).toString();
+		return print;
+	}
+	
+	public ArrayList<ApuestaBetPlayDTO> returnPropBetPlay(String cedula){
 		ArrayList<ApuestaBetPlayDTO> propBetPlays = new ArrayList<>();
 		for (ApuestaBetPlayDTO o : betPlays) {
 			if(Long.parseLong(cedula)==o.getCedula()) {

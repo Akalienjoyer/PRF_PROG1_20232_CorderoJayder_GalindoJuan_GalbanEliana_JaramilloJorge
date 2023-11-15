@@ -180,11 +180,25 @@ public class ApostadorDAO implements CRUDOperation{
 		}
 		return null;
 	}
-	public boolean checkPass(String contraseña, String repContraseña) {
-		if(contraseña.equals(repContraseña)) {
-			return true;
-		}else {
-			return false;
+	public int checkPass(String contrasenia, String repContrasenia) {
+		
+		boolean secure = true;
+		int count = 0;
+		int n = contrasenia.toCharArray().length;
+		for (int i = 0; i<n;i++) {
+				count++;
+		}
+		if(count<7) {
+			secure = false;
+		}
+		
+		if(!contrasenia.equals(repContrasenia)) {
+			return 1;
+		}else if(!secure) {
+			return 2;
+		}
+		else {
+			return 0;
 		}
 	}
 	public ApostadorDTO searchAndGet(String cedula) {
