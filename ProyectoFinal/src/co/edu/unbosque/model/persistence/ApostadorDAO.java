@@ -227,4 +227,12 @@ public class ApostadorDAO implements CRUDOperation{
 		writeSerializable();
 		
 	}
+	public boolean checkUser(String user) {
+		boolean unique = true;
+		for (ApostadorDTO o : apostadores) {
+			if(o.getUser().equals(user))
+				unique = false;
+		}
+		return unique;
+	}
 }

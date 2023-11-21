@@ -91,9 +91,7 @@ public class SedeDAO implements CRUDOperation{
 			return false;
 		else {
 			if(!args[0].isBlank()||!args[0].isEmpty())
-				sedes.get(index).setUbicacion(args[0]);
-			if(!args[1].isBlank()||!args[1].isEmpty())
-				sedes.get(index).setEmpleados(Integer.parseInt(args[1]));
+				sedes.get(index).setEmpleados(Integer.parseInt(args[0]));
 		}
 		writeSerializable();
 		return true;
@@ -143,6 +141,30 @@ public class SedeDAO implements CRUDOperation{
 			return false;
 		}
 	}
-	
-
+	public SedeDTO getSede(String ubi) {
+		for (SedeDTO o : sedes) {
+			if(o.getUbicacion().equals(ubi)) {
+				return o;
+			}
+		}
+		return null;
+	}
+	public boolean checkSede(String ubi) {
+		for (SedeDTO o : sedes) {
+			if(o.getUbicacion().equals(ubi))
+				return false;
+		}
+		return true;
+	}
+	public ArrayList<SedeDTO> returnList(){
+		return sedes;
+	}
+	public int returnIndex(String ubi) {
+		for (int i = 0; i < sedes.size(); i++) {
+			if(sedes.get(i).getUbicacion().equals(ubi)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }

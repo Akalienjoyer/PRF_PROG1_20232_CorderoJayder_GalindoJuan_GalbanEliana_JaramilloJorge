@@ -8,20 +8,26 @@ import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ApostadorDTO;
 import co.edu.unbosque.model.persistence.ApostadorDAO;
+import co.edu.unbosque.model.persistence.SedeDAO;
 import co.edu.unbosque.util.CellPhoneFormatException;
 import co.edu.unbosque.util.UnvalidNameException;
 import co.edu.unbosque.view.VentanaBaloto;
 import co.edu.unbosque.view.VentanaBetplay;
 import co.edu.unbosque.view.VentanaChance;
+import co.edu.unbosque.view.VentanaDigitSede;
 import co.edu.unbosque.view.VentanaGachapon;
 import co.edu.unbosque.view.VentanaGestionesAdmin;
 import co.edu.unbosque.view.VentanaInformacion;
 import co.edu.unbosque.view.VentanaPrincipal;
 import co.edu.unbosque.view.VentanaRegistroAtributos;
 import co.edu.unbosque.view.VentanaRegistroContrasenia;
+import co.edu.unbosque.view.VentanaSearchSede;
+import co.edu.unbosque.view.VentanaSedes;
 import co.edu.unbosque.view.VentanaSeleccionAdministrador;
 import co.edu.unbosque.view.VentanaSeleccionJuegos;
+import co.edu.unbosque.view.VentanaShowSede;
 import co.edu.unbosque.view.VentanaSuperAstro;
+import co.edu.unbosque.view.VentanaTablaSedes;
 import co.edu.unbosque.view.VentanaTragaMoneda;
 import co.edu.unbosque.view.VentanaInicioUsuario;
 import co.edu.unbosque.view.VentanaLogin;
@@ -51,10 +57,21 @@ public class Controller implements ActionListener {
 	private VentanaRegistroAtributos vAtributos;
 	private VentanaRegistroContrasenia vContrasenias;
 	
+	private VentanaSedes vSedes;
+	private VentanaDigitSede vDigitSede;
+	private VentanaDigitSede vDigitSedeA;
+	private VentanaSearchSede vSearchSede;
+	private VentanaSearchSede vSearchSedeA;
+	private VentanaSearchSede vSearchSedeD;
+	private VentanaShowSede vShowSede;
+	private VentanaTablaSedes vTablaSedes;
+	
 	private ApostadorDAO apostadorDAO;
 	
 	private ApostadorDTO currentUser;
-
+	
+	private SedeDAO sedeDAO;
+	
 	public Controller() {
 		
 		vPrincipal = new VentanaPrincipal();
@@ -74,6 +91,14 @@ public class Controller implements ActionListener {
 		vBetplay = new VentanaBetplay();
 		vTragaMonedas = new VentanaTragaMoneda();
 		
+		vSedes = new VentanaSedes();
+		vDigitSede = new VentanaDigitSede("Crear");
+		vSearchSede = new VentanaSearchSede("buscar");
+		vSearchSedeA= new VentanaSearchSede("actualizar");
+		vSearchSedeD= new VentanaSearchSede("borrar");
+		vShowSede = new VentanaShowSede();
+		vDigitSedeA = new VentanaDigitSede("Actualizar");
+		
 		vLogin = new VentanaLogin();
 		
 		vAtributos = new VentanaRegistroAtributos();
@@ -82,6 +107,8 @@ public class Controller implements ActionListener {
 		apostadorDAO = new ApostadorDAO();
 		
 		currentUser = new ApostadorDTO();
+		
+		sedeDAO = new SedeDAO();
 		agregarLectores();
 
 	}
@@ -133,6 +160,9 @@ public class Controller implements ActionListener {
 		
 		vGestionesAdmin.getRegresar().addActionListener(this);
 		vGestionesAdmin.getRegresar().setActionCommand("vGestionesRegresar");
+		
+		vGestionesAdmin.getGesSedes().addActionListener(this);
+		vGestionesAdmin.getGesSedes().setActionCommand("vGestionesSedes");
 		
 		// VENTANA INFORMACION
 		
@@ -227,7 +257,58 @@ public class Controller implements ActionListener {
 		vTragaMonedas.getRegresar().addActionListener(this);
 		vTragaMonedas.getRegresar().setActionCommand("vTragaMonedasRegresar");
 		
+		// VENTANA SEDES
 		
+		vSedes.getRegresar().addActionListener(this);
+		vSedes.getRegresar().setActionCommand("vSedesRegresar");;
+		
+		vSedes.getCrear().addActionListener(this);
+		vSedes.getCrear().setActionCommand("vSedesCrear");
+		
+		vDigitSede.getRegresar().addActionListener(this);
+		vDigitSede.getRegresar().setActionCommand("vDigitSedeRegresar");
+		
+		vDigitSede.getIngresar().addActionListener(this);
+		vDigitSede.getIngresar().setActionCommand("vDigitSedeIngresar");
+		
+		vSedes.getBuscar().addActionListener(this);
+		vSedes.getBuscar().setActionCommand("vSedesBuscar");
+		
+		vSearchSede.getRegresar().addActionListener(this);
+		vSearchSede.getRegresar().setActionCommand("vSearchSedeRegresar");
+		
+		vSearchSede.getIngresar().addActionListener(this);
+		vSearchSede.getIngresar().setActionCommand("vSearchSedeIngresar");
+		
+		vShowSede.getRegresar().addActionListener(this);
+		vShowSede.getRegresar().setActionCommand("vShowSedeRegresar");
+		
+		vSedes.getMostrar().addActionListener(this);
+		vSedes.getMostrar().setActionCommand("vSedesMostrar");
+		
+		vSedes.getActualizar().addActionListener(this);
+		vSedes.getActualizar().setActionCommand("vSedesActualizar");
+		
+		vSedes.getBorrar().addActionListener(this);
+		vSedes.getBorrar().setActionCommand("vSedesBorrar");
+		
+		vSearchSedeA.getRegresar().addActionListener(this);
+		vSearchSedeA.getRegresar().setActionCommand("vSearchSedeARegresar");
+		
+		vSearchSedeA.getIngresar().addActionListener(this);
+		vSearchSedeA.getIngresar().setActionCommand("vSearchSedeAIngresar");
+		
+		vDigitSedeA.getIngresar().addActionListener(this);
+		vDigitSedeA.getIngresar().setActionCommand("vDigitSedeAIngresar");
+		
+		vDigitSedeA.getRegresar().addActionListener(this);
+		vDigitSedeA.getRegresar().setActionCommand("vDigitSedeARegresar");
+		
+		vSearchSedeD.getRegresar().addActionListener(this);
+		vSearchSedeD.getRegresar().setActionCommand("vSearchSedeDRegresar");
+		
+		vSearchSedeD.getIngresar().addActionListener(this);
+		vSearchSedeD.getIngresar().setActionCommand("vSearchSedeDIngresar");
 	}
 
 	@Override
@@ -256,7 +337,7 @@ public class Controller implements ActionListener {
 			System.exit(0);
 			break;
 		}
-
+		
 		// VENTANA USUARIO -----------------------------------------
 
 		case "vUsuarioInfo": {
@@ -371,6 +452,12 @@ public class Controller implements ActionListener {
 			String contraseña = vContrasenias.getCampoContrasenia().getText();
 			String respContraseña = vContrasenias.getCampoContraseniaVerificacion().getText();
 			String user = vContrasenias.getCampoUsuario().getText();
+			if(!apostadorDAO.checkUser(user)) {
+				JOptionPane.showMessageDialog(vContrasenias, "Usuario existente."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vContrasenias.getCampoUsuario().setText("");
+				allInOrder = false;
+			}
 			if(apostadorDAO.checkPass(contraseña, respContraseña)==1) {
 				JOptionPane.showMessageDialog(vContrasenias, "Las contraseñas no coinciden."
 						,"Error",JOptionPane.ERROR_MESSAGE);
@@ -443,6 +530,181 @@ public class Controller implements ActionListener {
 		case "vGestionesRegresar": {
 			vGestionesAdmin.setVisible(false);
 			vSeleccionAdmin.setVisible(true);
+			break;
+		}
+		
+		case "vGestionesSedes":{
+			vGestionesAdmin.setVisible(false);
+			vSedes.setVisible(true);
+			 break;
+		}
+		// VENTANA SEDES ------------------------------------------------
+		
+		case "vSedesRegresar":{
+			vSedes.setVisible(false);
+			vGestionesAdmin.setVisible(true);
+			break;
+		}
+		
+		case "vSedesCrear":{
+			vSedes.setVisible(false);
+			vDigitSede.setVisible(true);
+			break;
+		}
+		
+		case "vDigitSedeRegresar":{
+			vDigitSede.setVisible(false);
+			vSedes.setVisible(true);
+			break;
+		}
+		
+		case "vDigitSedeIngresar":{
+			boolean allInOrder = true;
+			String ubicacion = vDigitSede.getUbicacion().getText();
+			String empleados = vDigitSede.getempleados().getText();
+			try {
+				Integer.parseInt(empleados);
+			} catch (NumberFormatException e2) {
+				JOptionPane.showMessageDialog(vDigitSede, "Digite un numero entero en al casilla de empleados."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vDigitSede.getempleados().setText("");
+				allInOrder = false;
+			}
+			if(ubicacion.isEmpty()||empleados.isEmpty()||ubicacion.isBlank()||empleados.isBlank()) {
+				JOptionPane.showMessageDialog(vDigitSede, "Debe llenar todos los datos."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				allInOrder = false;
+			}
+			if(!sedeDAO.checkSede(ubicacion)) {
+				JOptionPane.showMessageDialog(vDigitSede, "Ya existe una sede en esa ubicacion."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vDigitSede.getUbicacion().setText("");
+				allInOrder = false;
+			}
+			if(allInOrder) {
+				sedeDAO.create(ubicacion,empleados);
+				JOptionPane.showMessageDialog(vDigitSede, " Creado con exito!","Validacion",JOptionPane.INFORMATION_MESSAGE);
+				vDigitSede.getUbicacion().setText("");
+				vDigitSede.getempleados().setText("");
+				vDigitSede.setVisible(false);
+				vSedes.setVisible(true);
+			}
+			break;
+		}
+		
+		case "vSedesBuscar":{
+			vSedes.setVisible(false);
+			vSearchSede.setVisible(true);
+			break;
+		}
+		case "vSearchSedeRegresar":{
+			vSearchSede.setVisible(false);
+			vSedes.setVisible(true);
+			break;
+		}
+		case "vSearchSedeIngresar":{
+			String ubicacion = vSearchSede.getUbicacion().getText();
+			if(sedeDAO.getSede(ubicacion)!=null) {
+				vShowSede.uploadData(sedeDAO.getSede(ubicacion));
+				vSearchSede.setVisible(false);
+				vShowSede.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vSearchSede, "No existe una sede en esta ubicacion."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vSearchSede.getUbicacion().setText("");
+			}
+			break;
+		}
+		case "vShowSedeRegresar":{
+			vShowSede.setVisible(false);
+			vSearchSede.setVisible(true);
+			break;
+		}
+		case "vSedesMostrar":{
+			vTablaSedes = new VentanaTablaSedes(sedeDAO.returnList());
+			
+			vTablaSedes.setVisible(true);
+			break;
+		}
+		case "vSedesActualizar":{
+			vSedes.setVisible(false);
+			vSearchSedeA.setVisible(true);
+			break;
+		}
+		case "vSearchSedeARegresar":{
+			vSearchSedeA.setVisible(false);
+			vSedes.setVisible(true);
+			break;
+		}
+		case "vSearchSedeAIngresar":{
+			String ubicacion = vSearchSedeA.getUbicacion().getText();
+			if(sedeDAO.getSede(ubicacion)!=null) {
+				
+				JOptionPane.showMessageDialog(vSearchSedeA, " A continuacion digite los nuevos datos","Validacion",
+						JOptionPane.INFORMATION_MESSAGE);
+				vSearchSedeA.setVisible(false);
+				vDigitSedeA.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vSearchSedeA, "No existe una sede en esta ubicacion."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				
+			}
+			break;
+		}
+		case "vDigitSedeAIngresar":{
+			boolean allInOrder = true;
+			int index = sedeDAO.returnIndex(vSearchSedeA.getUbicacion().getText());
+			String empleados = vDigitSedeA.getempleados().getText();
+			try {
+				Integer.parseInt(empleados);
+			} catch (NumberFormatException e2) {
+				JOptionPane.showMessageDialog(vDigitSedeA, "Digite un numero entero en al casilla de empleados."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vDigitSedeA.getempleados().setText("");
+				allInOrder = false;
+			}
+			if(allInOrder) {
+			if(sedeDAO.update(index, empleados)) {
+			JOptionPane.showMessageDialog(vDigitSedeA, " Actualizado con exito","Validacion",
+					JOptionPane.INFORMATION_MESSAGE);
+			vSearchSedeA.getUbicacion().setText("");
+			vDigitSedeA.getUbicacion().setText("");
+			vDigitSedeA.setVisible(false);
+			vSedes.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vDigitSedeA, "No se pudo actualizar."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+			}
+			}
+			break;
+		}
+		case "vDigitSedeARegresar":{
+			vDigitSedeA.setVisible(false);
+			vSearchSedeA.setVisible(true);
+			break;
+		}
+		case "vSedesBorrar":{
+			vSedes.setVisible(false);
+			vSearchSedeD.setVisible(true);
+			break;
+		}
+		case "vSearchSedeDRegresar":{
+			vSearchSedeD.setVisible(false);
+			vSedes.setVisible(true);
+			break;
+		}
+		case "vSearchSedeDIngresar":{
+			int index = sedeDAO.returnIndex(vSearchSedeD.getUbicacion().getText());
+			if(sedeDAO.delete(index)) {
+				JOptionPane.showMessageDialog(vSearchSedeD, " Borrado con exito","Validacion",
+						JOptionPane.INFORMATION_MESSAGE);
+				vSearchSedeD.getUbicacion().setText("");
+				vSearchSedeD.setVisible(false);
+				vSedes.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vSearchSedeD, "No existe una sede en esta ubicacion."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+			}
 			break;
 		}
 		
