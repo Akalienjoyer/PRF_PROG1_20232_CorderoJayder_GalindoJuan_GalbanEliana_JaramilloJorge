@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 public class VentanaGestionesAdmin extends JFrame{
 	
-	private JButton gesSedes, gesApostadores, gesCasa, regresar;
+	private JButton gesSedes, gesApostadores, gesCasa, gesJuegos, regresar;
 	private JLabel imagenFondo;
 
 	public VentanaGestionesAdmin() {
@@ -46,21 +46,27 @@ public class VentanaGestionesAdmin extends JFrame{
 		
 		gesSedes = new JButton();
 		gesSedes.setOpaque(false);
-		gesSedes.setBounds(177, 299, 345, 52);
+		gesSedes.setBounds(177, 279, 345, 52);
 		gesSedes.setToolTipText("Ingresar para Gestionar las Sedes de la Compañia");
 		add(gesSedes);
 		
 		gesApostadores = new JButton();
 		gesApostadores.setOpaque(false);
-		gesApostadores.setBounds(177, 376, 345, 52);
+		gesApostadores.setBounds(177, 356, 345, 52);
 		gesApostadores.setToolTipText("Ingresar para Gestionar los Apostadores");
 		add(gesApostadores);
 		
 		gesCasa = new JButton();
 		gesCasa.setOpaque(false);
-		gesCasa.setBounds(177, 454, 345, 52);
+		gesCasa.setBounds(177, 434, 345, 52);
 		gesCasa.setToolTipText("Ingresar para Gestionar la Casa de Apuestas");
 		add(gesCasa);
+		
+		gesJuegos = new JButton();
+		gesJuegos.setOpaque(false);
+		gesJuegos.setBounds(177, 504, 345, 52);
+		gesJuegos.setToolTipText("Ingresar para Gestionar los juegos");
+		add(gesJuegos);
 	}
 
 	public JButton getGesSedes() {
@@ -85,6 +91,14 @@ public class VentanaGestionesAdmin extends JFrame{
 
 	public void setGesCasa(JButton gesCasa) {
 		this.gesCasa = gesCasa;
+	}
+
+	public JButton getGesJuegos() {
+		return gesJuegos;
+	}
+
+	public void setGesJuegos(JButton gesJuegos) {
+		this.gesJuegos = gesJuegos;
 	}
 
 	public JButton getRegresar() {

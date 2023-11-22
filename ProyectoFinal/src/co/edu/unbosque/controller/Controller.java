@@ -11,9 +11,11 @@ import co.edu.unbosque.model.persistence.ApostadorDAO;
 import co.edu.unbosque.model.persistence.SedeDAO;
 import co.edu.unbosque.util.CellPhoneFormatException;
 import co.edu.unbosque.util.UnvalidNameException;
+import co.edu.unbosque.view.VentanaApostadores;
 import co.edu.unbosque.view.VentanaBaloto;
 import co.edu.unbosque.view.VentanaBetplay;
 import co.edu.unbosque.view.VentanaChance;
+import co.edu.unbosque.view.VentanaCreacionApostador1;
 import co.edu.unbosque.view.VentanaDigitSede;
 import co.edu.unbosque.view.VentanaGachapon;
 import co.edu.unbosque.view.VentanaGestionesAdmin;
@@ -21,12 +23,15 @@ import co.edu.unbosque.view.VentanaInformacion;
 import co.edu.unbosque.view.VentanaPrincipal;
 import co.edu.unbosque.view.VentanaRegistroAtributos;
 import co.edu.unbosque.view.VentanaRegistroContrasenia;
+import co.edu.unbosque.view.VentanaSearchApostador;
 import co.edu.unbosque.view.VentanaSearchSede;
 import co.edu.unbosque.view.VentanaSedes;
 import co.edu.unbosque.view.VentanaSeleccionAdministrador;
 import co.edu.unbosque.view.VentanaSeleccionJuegos;
+import co.edu.unbosque.view.VentanaShowApostador;
 import co.edu.unbosque.view.VentanaShowSede;
 import co.edu.unbosque.view.VentanaSuperAstro;
+import co.edu.unbosque.view.VentanaTablaApostadores;
 import co.edu.unbosque.view.VentanaTablaSedes;
 import co.edu.unbosque.view.VentanaTragaMoneda;
 import co.edu.unbosque.view.VentanaInicioUsuario;
@@ -66,6 +71,15 @@ public class Controller implements ActionListener {
 	private VentanaShowSede vShowSede;
 	private VentanaTablaSedes vTablaSedes;
 	
+	private VentanaApostadores vApostadores;
+	private VentanaCreacionApostador1 vCApostador1;	
+	private VentanaCreacionApostador1 vCApostador1A;	
+	private VentanaTablaApostadores vTablaApostadores;
+	private VentanaSearchApostador vSearchApostador;
+	private VentanaSearchApostador vSearchApostadorA;
+	private VentanaSearchApostador vSearchApostadorD;
+	private VentanaShowApostador vShowApostador;
+	
 	private ApostadorDAO apostadorDAO;
 	
 	private ApostadorDTO currentUser;
@@ -98,6 +112,14 @@ public class Controller implements ActionListener {
 		vSearchSedeD= new VentanaSearchSede("borrar");
 		vShowSede = new VentanaShowSede();
 		vDigitSedeA = new VentanaDigitSede("Actualizar");
+		
+		vApostadores = new VentanaApostadores();
+		vCApostador1 = new VentanaCreacionApostador1("creacion");
+		vCApostador1A = new VentanaCreacionApostador1("  edicion");
+		vSearchApostador = new VentanaSearchApostador("buscar");
+		vSearchApostadorA = new VentanaSearchApostador("actualizar");
+		vSearchApostadorD = new VentanaSearchApostador("borrar");
+		vShowApostador = new VentanaShowApostador();
 		
 		vLogin = new VentanaLogin();
 		
@@ -163,6 +185,9 @@ public class Controller implements ActionListener {
 		
 		vGestionesAdmin.getGesSedes().addActionListener(this);
 		vGestionesAdmin.getGesSedes().setActionCommand("vGestionesSedes");
+		
+		vGestionesAdmin.getGesApostadores().addActionListener(this);
+		vGestionesAdmin.getGesApostadores().setActionCommand("vGestionesApostadores");
 		
 		// VENTANA INFORMACION
 		
@@ -309,6 +334,59 @@ public class Controller implements ActionListener {
 		
 		vSearchSedeD.getIngresar().addActionListener(this);
 		vSearchSedeD.getIngresar().setActionCommand("vSearchSedeDIngresar");
+		
+		//VENTANAS APOSTADORES ----------------------------------------
+		
+		vApostadores.getRegresar().addActionListener(this);
+		vApostadores.getRegresar().setActionCommand("vApostadoresRegresar");
+		
+		vApostadores.getCrear().addActionListener(this);
+		vApostadores.getCrear().setActionCommand("vApostadoresCrear");
+		
+		vCApostador1.getRegresar().addActionListener(this);
+		vCApostador1.getRegresar().setActionCommand("vCApostador1Regresar");
+		
+		vCApostador1.getIngresar().addActionListener(this);
+		vCApostador1.getIngresar().setActionCommand("vCApostadorIngresar");
+		
+		vApostadores.getMostrar().addActionListener(this);
+		vApostadores.getMostrar().setActionCommand("vApostadoresMostar");
+		
+		vApostadores.getActualizar().addActionListener(this);
+		vApostadores.getActualizar().setActionCommand("vApostadoresActualizar");
+		
+		vCApostador1A.getRegresar().addActionListener(this);
+		vCApostador1A.getRegresar().setActionCommand("vCApostadorARegresar");
+		
+		vCApostador1A.getIngresar().addActionListener(this);
+		vCApostador1A.getIngresar().setActionCommand("vCApostadorAIngresar");
+		
+		vSearchApostadorA.getRegresar().addActionListener(this);
+		vSearchApostadorA.getRegresar().setActionCommand("vSearchApostadorARegresar");
+		
+		vSearchApostadorA.getIngresar().addActionListener(this);
+		vSearchApostadorA.getIngresar().setActionCommand("vSearchApostadorAIngresar");
+		
+		vSearchApostadorD.getRegresar().addActionListener(this);
+		vSearchApostadorD.getRegresar().setActionCommand("vSearchApostadorDRegresar");
+		
+		vSearchApostadorD.getIngresar().addActionListener(this);
+		vSearchApostadorD.getIngresar().setActionCommand("vSearchApostadorDIngresar");
+		
+		vSearchApostador.getRegresar().addActionListener(this);
+		vSearchApostador.getRegresar().setActionCommand("vSearchApostadorRegresar");
+		
+		vSearchApostador.getIngresar().addActionListener(this);
+		vSearchApostador.getIngresar().setActionCommand("vSearchApostadorIngresar");
+		
+		vApostadores.getBorrar().addActionListener(this);
+		vApostadores.getBorrar().setActionCommand("vApostadoresBorrar");
+		
+		vApostadores.getBuscar().addActionListener(this);
+		vApostadores.getBuscar().setActionCommand("vApostadoresBuscar");
+		
+		vShowApostador.getRegresar().addActionListener(this);
+		vShowApostador.getRegresar().setActionCommand("vShowApostadorRegresar");
 	}
 
 	@Override
@@ -412,17 +490,23 @@ public class Controller implements ActionListener {
 			try {
 				Long.parseLong(cedula);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(vContrasenias, "La cedula solo consiste de numeros."
+				JOptionPane.showMessageDialog(vAtributos, "La cedula solo consiste de numeros."
 						,"Error",JOptionPane.ERROR_MESSAGE);
 				vAtributos.getCedula().setText("");
 				allInOrder = false;
 			}
 			String direccion = vAtributos.getDireccion().getText();
 			String sede = vAtributos.getSedeJuego().getText();
+			if(sedeDAO.checkSede(sede)) {
+				JOptionPane.showMessageDialog(vAtributos, "No existe esta sede."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vAtributos.getSedeJuego().setText("");
+				allInOrder = false;
+			}
 			
 			if(nombre.isEmpty()||cedula.isEmpty()||sede.isEmpty()||direccion.isEmpty()||celular.isEmpty()||
 					nombre.isBlank()||cedula.isBlank()||sede.isBlank()||direccion.isBlank()||celular.isBlank()) {
-				JOptionPane.showMessageDialog(vContrasenias, "Debe llenar todos los datos."
+				JOptionPane.showMessageDialog(vAtributos, "Debe llenar todos los datos."
 						,"Error",JOptionPane.ERROR_MESSAGE);
 				allInOrder = false;
 			}
@@ -694,7 +778,7 @@ public class Controller implements ActionListener {
 			break;
 		}
 		case "vSearchSedeDIngresar":{
-			int index = sedeDAO.returnIndex(vSearchSedeD.getUbicacion().getText());
+			int index =  sedeDAO.returnIndex(vSearchSedeD.getUbicacion().getText());
 			if(sedeDAO.delete(index)) {
 				JOptionPane.showMessageDialog(vSearchSedeD, " Borrado con exito","Validacion",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -702,9 +786,238 @@ public class Controller implements ActionListener {
 				vSearchSedeD.setVisible(false);
 				vSedes.setVisible(true);
 			}else {
-				JOptionPane.showMessageDialog(vSearchSedeD, "No existe una sede en esta ubicacion."
+				JOptionPane.showMessageDialog(vSearchSedeD, "No se pudo borrar."
 						,"Error",JOptionPane.ERROR_MESSAGE);
 			}
+			break;
+		}
+		
+		// VENTANAS APOSTADORES ----------------------------------------
+		
+		case "vApostadoresRegresar":{
+			vApostadores.setVisible(false);
+			vGestionesAdmin.setVisible(true);
+			break;
+		}
+		case "vGestionesApostadores":{
+			vGestionesAdmin.setVisible(false);
+			vApostadores.setVisible(true);
+			break;
+		}
+		case "vApostadoresCrear":{
+			vApostadores.setVisible(false);
+			vCApostador1.setVisible(true);
+			break;
+		}
+		case "vCApostador1Regresar":{
+			vCApostador1.setVisible(false);
+			vApostadores.setVisible(true);
+			break;
+		}
+		case "vCApostadorIngresar":{
+			boolean allInOrder = true;
+			String nombre = vCApostador1.getNombreCompleto().getText();
+			try {
+				checkName(nombre);
+			} catch (UnvalidNameException e1) {
+				vCApostador1.getNombreCompleto().setText("");
+				allInOrder=false;
+			}
+			String celular = vCApostador1.getCelular().getText();
+			try {
+				checkCellFormat(celular);
+			} catch (Exception e1) {
+				vCApostador1.getCelular().setText("");
+				allInOrder = false;
+			}
+			String cedula = vCApostador1.getCedula().getText();
+			try {
+				Long.parseLong(cedula);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(vCApostador1, "La cedula solo consiste de numeros."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vCApostador1.getCedula().setText("");
+				allInOrder = false;
+			}
+			String direccion = vCApostador1.getDireccion().getText();
+			String sede = vCApostador1.getSedeJuego().getText();
+			if(sedeDAO.checkSede(sede)) {
+				JOptionPane.showMessageDialog(vCApostador1, "No existe esta sede."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vCApostador1.getSedeJuego().setText("");
+				allInOrder= false;
+			}
+			if(nombre.isEmpty()||cedula.isEmpty()||sede.isEmpty()||direccion.isEmpty()||celular.isEmpty()||
+					nombre.isBlank()||cedula.isBlank()||sede.isBlank()||direccion.isBlank()||celular.isBlank()) {
+				JOptionPane.showMessageDialog(vCApostador1, "Debe llenar todos los datos."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				allInOrder = false;
+			}
+			if(allInOrder) {
+				apostadorDAO.create(nombre,cedula,sede,direccion,celular,"N/A","N/A");
+				JOptionPane.showMessageDialog(vCApostador1, " Creado con exito!","Validacion",JOptionPane.INFORMATION_MESSAGE);
+				vCApostador1.getNombreCompleto().setText("");
+				vCApostador1.getCedula().setText("");
+				vCApostador1.getSedeJuego().setText("");
+				vCApostador1.getDireccion().setText("");
+				vCApostador1.getCelular().setText("");
+			vCApostador1.setVisible(false);
+			vApostadores.setVisible(true);
+			}
+		break;
+		}
+		case "vApostadoresMostar":{
+			vTablaApostadores = new VentanaTablaApostadores(apostadorDAO.returnList());
+			vTablaApostadores.setVisible(true);
+			break;
+		}
+		case "vApostadoresActualizar":{
+			vApostadores.setVisible(false);
+			vSearchApostadorA.setVisible(true);
+			break;
+		}
+		case "vCApostadorARegresar":{
+			vCApostador1A.setVisible(false);
+			vSearchApostador.setVisible(true);
+			break;
+		}
+		case "vCApostadorAIngresar":{
+			boolean allInOrder = true;
+			String nombre = vCApostador1A.getNombreCompleto().getText();
+			try {
+				checkName(nombre);
+			} catch (UnvalidNameException e1) {
+				vCApostador1A.getNombreCompleto().setText("");
+				allInOrder=false;
+			}
+			String celular = vCApostador1A.getCelular().getText();
+			try {
+				checkCellFormat(celular);
+			} catch (Exception e1) {
+				vCApostador1A.getCelular().setText("");
+				allInOrder = false;
+			}
+			String cedula = vCApostador1A.getCedula().getText();
+			try {
+				Long.parseLong(cedula);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(vCApostador1A, "La cedula solo consiste de numeros."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vCApostador1A.getCedula().setText("");
+				allInOrder = false;
+			}
+			String direccion = vCApostador1A.getDireccion().getText();
+			String sede = vCApostador1A.getSedeJuego().getText();
+			if(sedeDAO.checkSede(sede)) {
+				JOptionPane.showMessageDialog(vCApostador1A, "No existe esta sede."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vCApostador1A.getSedeJuego().setText("");
+				allInOrder= false;
+			}
+			
+			if(nombre.isEmpty()||cedula.isEmpty()||sede.isEmpty()||direccion.isEmpty()||celular.isEmpty()||
+					nombre.isBlank()||cedula.isBlank()||sede.isBlank()||direccion.isBlank()||celular.isBlank()) {
+				JOptionPane.showMessageDialog(vCApostador1A, "Debe llenar todos los datos."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				allInOrder = false;
+			}
+			if(allInOrder) {
+				apostadorDAO.create(nombre,cedula,sede,direccion,celular,"N/A","N/A");
+				JOptionPane.showMessageDialog(vCApostador1A, " Actualizado con exito!","Validacion",JOptionPane.INFORMATION_MESSAGE);
+				vCApostador1A.getNombreCompleto().setText("");
+				vCApostador1A.getCedula().setText("");
+				vCApostador1A.getSedeJuego().setText("");
+				vCApostador1A.getDireccion().setText("");
+				vCApostador1A.getCelular().setText("");
+				vCApostador1A.setVisible(false);
+				vApostadores.setVisible(true);
+			}
+		break;
+		}
+		case "vSearchApostadorARegresar":{
+			vSearchApostadorA.setVisible(false);
+			vApostadores.setVisible(true);
+			break;
+		}
+		case "vSearchApostadorAIngresar":{
+			boolean allInOrder = true;
+			String cedula = vSearchApostadorA.getcedula().getText();
+			try {
+				Long.parseLong(cedula);
+			} catch (NumberFormatException e2) {
+				JOptionPane.showMessageDialog(vSearchApostadorA, "La cedula solo consiste de numeros."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vSearchApostadorA.getcedula().setText("");
+				allInOrder = false;
+			}
+			if(allInOrder) {
+			if(apostadorDAO.getApostador(cedula)!=null) {
+				
+				JOptionPane.showMessageDialog(vSearchApostadorA, " A continuacion digite los nuevos datos","Validacion",
+						JOptionPane.INFORMATION_MESSAGE);
+				vSearchApostadorA.setVisible(false);
+				vCApostador1A.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vSearchApostadorA, "No existe este apostador."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				
+			}
+			}
+			break;
+		}
+		case "vApostadoresBorrar":{
+			vApostadores.setVisible(false);
+			vSearchApostadorD.setVisible(true);
+			break;
+		}
+		case "vSearchApostadorDRegresar":{
+			vSearchApostadorD.setVisible(false);
+			vApostadores.setVisible(true);
+			break;
+		}
+		case "vSearchApostadorDIngresar":{
+			int index =  apostadorDAO.returnIndex(vSearchApostadorD.getcedula().getText());
+			if(apostadorDAO.delete(index)) {
+				JOptionPane.showMessageDialog(vSearchApostadorD, " Borrado con exito","Validacion",
+						JOptionPane.INFORMATION_MESSAGE);
+				vSearchApostadorD.getcedula().setText("");
+				vSearchApostadorD.setVisible(false);
+				vApostadores.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vSearchApostadorD, "No se pudo borrar."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vSearchApostadorD.getcedula().setText("");
+			}
+			break;
+		}
+		case "vApostadoresBuscar":{
+			vApostadores.setVisible(false);
+			vSearchApostador.setVisible(true);
+			break;
+		}
+		
+		case "vSearchApostadorRegresar":{
+			vSearchApostador.setVisible(false);
+			vApostadores.setVisible(true);
+			break;
+		}
+		
+		case "vSearchApostadorIngresar":{
+			String cedula = vSearchApostador.getcedula().getText();
+			if(apostadorDAO.getApostador(cedula)!=null) {
+				vShowApostador.uploadData(apostadorDAO.getApostador(cedula));
+				vSearchApostador.setVisible(false);
+				vShowApostador.setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(vSearchApostador, "No existe una sede en esta ubicacion."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				vSearchApostador.getcedula().setText("");
+			}
+			break;
+		}
+		case "vShowApostadorRegresar":{
+			vShowApostador.setVisible(false);
+			vSearchApostador.setVisible(true);
 			break;
 		}
 		

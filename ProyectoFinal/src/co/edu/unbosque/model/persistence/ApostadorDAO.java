@@ -3,6 +3,7 @@ package co.edu.unbosque.model.persistence;
 import java.util.ArrayList;
 
 import co.edu.unbosque.model.ApostadorDTO;
+import co.edu.unbosque.model.SedeDTO;
 
 /**
  * Data Access Object de Apostador.
@@ -234,5 +235,21 @@ public class ApostadorDAO implements CRUDOperation{
 				unique = false;
 		}
 		return unique;
+	}
+	public int returnIndex(String ced) {
+		for (int i = 0; i < apostadores.size(); i++) {
+			if(apostadores.get(i).getCedula()==Integer.parseInt(ced)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	public ApostadorDTO getApostador(String ced) {
+		for (ApostadorDTO o : apostadores) {
+			if(o.getCedula()==Integer.parseInt(ced)) {
+				return o;
+			}
+		}
+		return null;
 	}
 }
