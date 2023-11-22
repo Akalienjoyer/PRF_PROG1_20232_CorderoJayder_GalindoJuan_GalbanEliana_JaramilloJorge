@@ -40,14 +40,14 @@ public class VentanaShowSede extends JFrame{
 		ubicacion = new JLabel();
 		ubicacion.setText("Null");
 		ubicacion.setBounds(135, 307, 500, 50);
-		ubicacion.setForeground(Color.WHITE);
+		ubicacion.setForeground(Color.BLACK);
 		ubicacion.setFont(new Font("Nue Gothic", 1, 45));
 		add(ubicacion);
 
 		empleados = new JLabel();
 		empleados.setText("Null");
 		empleados.setBounds(140, 484, 500, 50);
-		empleados.setForeground(Color.WHITE);
+		empleados.setForeground(Color.BLACK);
 		empleados.setFont(new Font("Nue Gothic", 1, 45));
 		add(empleados);
 		

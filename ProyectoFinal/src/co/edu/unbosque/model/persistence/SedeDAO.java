@@ -167,4 +167,10 @@ public class SedeDAO implements CRUDOperation{
 		}
 		return -1;
 	}
+	public boolean maxSedes(String max) {
+		if(sedes.size()==Integer.parseInt(max)) {
+			return false;
+		}
+		return true;
+	}
 }

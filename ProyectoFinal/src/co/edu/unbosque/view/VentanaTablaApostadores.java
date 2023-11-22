@@ -38,5 +38,6 @@ public class VentanaTablaApostadores extends JFrame{
           JScrollPane scrollPane = new JScrollPane(table);
           getContentPane().add(scrollPane, BorderLayout.CENTER);
 	}
+
 }
 

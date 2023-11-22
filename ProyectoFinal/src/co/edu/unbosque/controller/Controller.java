@@ -2,6 +2,12 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,8 +20,10 @@ import co.edu.unbosque.util.UnvalidNameException;
 import co.edu.unbosque.view.VentanaApostadores;
 import co.edu.unbosque.view.VentanaBaloto;
 import co.edu.unbosque.view.VentanaBetplay;
+import co.edu.unbosque.view.VentanaCasa;
 import co.edu.unbosque.view.VentanaChance;
 import co.edu.unbosque.view.VentanaCreacionApostador1;
+import co.edu.unbosque.view.VentanaDigitCasa;
 import co.edu.unbosque.view.VentanaDigitSede;
 import co.edu.unbosque.view.VentanaGachapon;
 import co.edu.unbosque.view.VentanaGestionesAdmin;
@@ -29,6 +37,7 @@ import co.edu.unbosque.view.VentanaSedes;
 import co.edu.unbosque.view.VentanaSeleccionAdministrador;
 import co.edu.unbosque.view.VentanaSeleccionJuegos;
 import co.edu.unbosque.view.VentanaShowApostador;
+import co.edu.unbosque.view.VentanaShowCasa;
 import co.edu.unbosque.view.VentanaShowSede;
 import co.edu.unbosque.view.VentanaSuperAstro;
 import co.edu.unbosque.view.VentanaTablaApostadores;
@@ -62,6 +71,8 @@ public class Controller implements ActionListener {
 	private VentanaRegistroAtributos vAtributos;
 	private VentanaRegistroContrasenia vContrasenias;
 	
+	private Properties configProperties;
+	
 	private VentanaSedes vSedes;
 	private VentanaDigitSede vDigitSede;
 	private VentanaDigitSede vDigitSedeA;
@@ -79,6 +90,10 @@ public class Controller implements ActionListener {
 	private VentanaSearchApostador vSearchApostadorA;
 	private VentanaSearchApostador vSearchApostadorD;
 	private VentanaShowApostador vShowApostador;
+	
+	private VentanaCasa vCasas;
+	private VentanaShowCasa vShowCasa;
+	private VentanaDigitCasa vDigitCasa;
 	
 	private ApostadorDAO apostadorDAO;
 	
@@ -121,12 +136,19 @@ public class Controller implements ActionListener {
 		vSearchApostadorD = new VentanaSearchApostador("borrar");
 		vShowApostador = new VentanaShowApostador();
 		
+		vCasas = new VentanaCasa();
+		vShowCasa = new VentanaShowCasa();
+		
 		vLogin = new VentanaLogin();
 		
 		vAtributos = new VentanaRegistroAtributos();
 		vContrasenias = new VentanaRegistroContrasenia();
+		vDigitCasa = new VentanaDigitCasa();
 		
 		apostadorDAO = new ApostadorDAO();
+		
+		configProperties = new Properties();
+		loadConfig();
 		
 		currentUser = new ApostadorDTO();
 		
@@ -188,6 +210,9 @@ public class Controller implements ActionListener {
 		
 		vGestionesAdmin.getGesApostadores().addActionListener(this);
 		vGestionesAdmin.getGesApostadores().setActionCommand("vGestionesApostadores");
+		
+		vGestionesAdmin.getGesCasa().addActionListener(this);
+		vGestionesAdmin.getGesCasa().setActionCommand("vGestionCasas");
 		
 		// VENTANA INFORMACION
 		
@@ -387,6 +412,26 @@ public class Controller implements ActionListener {
 		
 		vShowApostador.getRegresar().addActionListener(this);
 		vShowApostador.getRegresar().setActionCommand("vShowApostadorRegresar");
+		
+		//VENTANA CASA -----------------------------------------------
+		
+		vCasas.getRegresar().addActionListener(this);
+		vCasas.getRegresar().setActionCommand("vCasaRegresar");
+		
+		vCasas.getMostrar().addActionListener(this);
+		vCasas.getMostrar().setActionCommand("vCasaMostrar");
+		
+		vShowCasa.getRegresar().addActionListener(this);
+		vShowCasa.getRegresar().setActionCommand("vShowCasaRegresar");
+		
+		vCasas.getEditar().addActionListener(this);
+		vCasas.getEditar().setActionCommand("vCasaEditar");
+		
+		vDigitCasa.getRegresar().addActionListener(this);
+		vDigitCasa.getRegresar().setActionCommand("vDigitCasaRegresar");
+		
+		vDigitCasa.getIngresar().addActionListener(this);
+		vDigitCasa.getIngresar().setActionCommand("vDigitCasaIngresar");
 	}
 
 	@Override
@@ -665,6 +710,12 @@ public class Controller implements ActionListener {
 				vDigitSede.getUbicacion().setText("");
 				allInOrder = false;
 			}
+			if(!sedeDAO.maxSedes(configProperties.getProperty(
+					"PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.numeroDeSedes"))) {
+				JOptionPane.showMessageDialog(vDigitSede, "Se ha alcanzado el numero maximo de sedes de la casa."
+						,"Error",JOptionPane.ERROR_MESSAGE);
+				allInOrder = false;
+			}
 			if(allInOrder) {
 				sedeDAO.create(ubicacion,empleados);
 				JOptionPane.showMessageDialog(vDigitSede, " Creado con exito!","Validacion",JOptionPane.INFORMATION_MESSAGE);
@@ -883,6 +934,7 @@ public class Controller implements ActionListener {
 		}
 		case "vCApostadorAIngresar":{
 			boolean allInOrder = true;
+			int index = apostadorDAO.returnIndex(vSearchApostadorA.getcedula().getText());
 			String nombre = vCApostador1A.getNombreCompleto().getText();
 			try {
 				checkName(nombre);
@@ -922,7 +974,7 @@ public class Controller implements ActionListener {
 				allInOrder = false;
 			}
 			if(allInOrder) {
-				apostadorDAO.create(nombre,cedula,sede,direccion,celular,"N/A","N/A");
+				apostadorDAO.update(index,nombre,cedula,sede,direccion,celular,"N/A","N/A");
 				JOptionPane.showMessageDialog(vCApostador1A, " Actualizado con exito!","Validacion",JOptionPane.INFORMATION_MESSAGE);
 				vCApostador1A.getNombreCompleto().setText("");
 				vCApostador1A.getCedula().setText("");
@@ -1021,6 +1073,64 @@ public class Controller implements ActionListener {
 			break;
 		}
 		
+		//VENTANA CASA --------------------------------------------
+		case "vGestionCasas":{
+			vGestionesAdmin.setVisible(false);
+			vCasas.setVisible(true);
+			break;
+		}
+		case "vCasaRegresar":{
+			vCasas.setVisible(false);
+			vGestionesAdmin.setVisible(true);
+			break;
+		}
+		case "vCasaMostrar":{
+			vShowCasa.uploadData(
+		configProperties.getProperty("PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.nombreDeCasa")
+		,configProperties.getProperty("PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.presupuesto")
+		,configProperties.getProperty("PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.numeroDeSedes"));
+			vCasas.setVisible(false);
+			vShowCasa.setVisible(true);
+			break;
+		}
+		case "vShowCasaRegresar":{
+			vShowCasa.setVisible(false);
+			vCasas.setVisible(true);
+			break;
+		}
+		case "vCasaEditar":{
+			vCasas.setVisible(false);
+			vDigitCasa.setVisible(true);
+			break;
+		}
+		case "vDigitCasaRegresar":{
+			vDigitCasa.setVisible(false);
+			vCasas.setVisible(true);
+			break;
+		}
+		case "vDigitCasaIngresar":{
+			String nombre = vDigitCasa.getnombre().getText();
+			String presupuesto = vDigitCasa.getpresupuesto().getText();
+			String cantSedes = vDigitCasa.getcantSedes().getText();
+			
+		configProperties.setProperty("PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.nombreDeCasa", 
+				nombre);
+		configProperties.setProperty("PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.presupuesto", 
+				presupuesto);
+		configProperties.setProperty("PRF_PROG1_20232_CorderoJayder_GalindoJuan_GalvanEliana_JaramilloJorge.properties.numeroDeSedes", 
+				cantSedes);
+		
+		if(cantSedes!=null&&presupuesto!=null&&nombre!=null) {
+			JOptionPane.showMessageDialog(vDigitCasa, " Actualizado con exito!","Validacion",JOptionPane.INFORMATION_MESSAGE);
+			saveConfig();
+			vDigitCasa.setVisible(false);
+			vCasas.setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(vDigitCasa, "Error al actualizar."
+					,"Error",JOptionPane.ERROR_MESSAGE);
+		}
+			break;
+		}
 		// VENTANA INFORMACION  ---------------------------------------
 		
 		case "vIngresarJuego": {
@@ -1143,6 +1253,23 @@ public class Controller implements ActionListener {
 			JOptionPane.showMessageDialog(vPrincipal, "INGRESA UNA OPCION VALIDA");
 		}
 
+		}
+	}
+	
+	public void loadConfig() {
+		try {
+			configProperties.load(new BufferedReader(new FileReader("src/co/edu/unbosque/model/persistence/config.properties")));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void saveConfig() {
+		try {
+			configProperties.store(new FileWriter("src/co/edu/unbosque/model/persistence/config.properties"),"");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
