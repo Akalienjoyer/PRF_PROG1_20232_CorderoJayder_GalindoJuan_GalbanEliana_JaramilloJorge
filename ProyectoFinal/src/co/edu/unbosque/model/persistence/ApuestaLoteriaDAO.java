@@ -7,6 +7,7 @@ import co.edu.unbosque.model.ApuestaLoteriaDTO;
 public class ApuestaLoteriaDAO implements CRUDOperation{
 
 	ArrayList<ApuestaLoteriaDTO> loterias;
+	ArrayList<ApuestaLoteriaDTO> carritoLoterias;
 	private final String SERIAL_FILENAME = "apuestas-loteria.dat";
 	
 	/**
@@ -222,5 +223,12 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 				return 1;
 			}
 			return 2;
+	}
+	public void addCarrito() {
+		carritoLoterias.add(loterias.get(loterias.size()-1));
+		writeSerializable();
+	}
+	public ArrayList<ApuestaLoteriaDTO> returnCarrito() {
+		return carritoLoterias;
 	}
 }

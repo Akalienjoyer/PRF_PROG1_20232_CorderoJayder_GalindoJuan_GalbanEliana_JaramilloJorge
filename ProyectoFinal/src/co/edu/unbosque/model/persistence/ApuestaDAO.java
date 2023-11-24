@@ -143,5 +143,13 @@ public class ApuestaDAO implements CRUDOperation{
 			}
 			return apuestas;
 		}
-	
+	public float returnTotalBet(String cedula) {
+		float exit = 0;
+		for (ApuestaDTO o : apuestas) {
+			if(o.getCedula()==Long.parseLong(cedula)) {
+				exit+=o.getValorApuesta();
+			}
+		}
+		return exit;
+	}
 }

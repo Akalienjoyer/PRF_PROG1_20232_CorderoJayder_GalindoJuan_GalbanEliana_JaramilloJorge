@@ -3,10 +3,10 @@ package co.edu.unbosque.model.persistence;
 import java.util.ArrayList;
 
 import co.edu.unbosque.model.ApuestaBalotoDTO;
-import co.edu.unbosque.model.ApuestaLoteriaDTO;
 
 public class ApuestaBalotoDAO implements CRUDOperation{
 	private ArrayList<ApuestaBalotoDTO> balotos;
+	private ArrayList<ApuestaBalotoDTO> carritoBalotos;
 private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 	
 	/**
@@ -222,5 +222,12 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 				return 1;
 			}
 			return 2;
+	}
+	public void addCarrito() {
+		carritoBalotos.add(balotos.get(balotos.size()-1));
+		writeSerializable();
+	}
+	public ArrayList<ApuestaBalotoDTO> returnCarrito() {
+		return carritoBalotos;
 	}
 }

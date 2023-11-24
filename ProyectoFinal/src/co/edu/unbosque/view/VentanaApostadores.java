@@ -33,11 +33,11 @@ public class VentanaApostadores extends JFrame{
 		regresar.setBounds(-4, 660, 120, 30);
 		regresar.setToolTipText("Regresa al Menu Anterior");
 		add(regresar);
-
+		
 		imagenFondo = new JLabel();
 		imagenFondo.setBounds(0, 0, getWidth(), getHeight());
 		Image temp;
-		temp = new ImageIcon("src/Imagenes/Apostadores.png").getImage();
+		temp = new ImageIcon("src/Imagenes/GestionApostadores.png").getImage();
 		ImageIcon img;
 		img = new ImageIcon(
 				temp.getScaledInstance(imagenFondo.getWidth(), imagenFondo.getHeight(), Image.SCALE_SMOOTH));
@@ -46,32 +46,32 @@ public class VentanaApostadores extends JFrame{
 
 		crear = new JButton();
 		crear.setOpaque(false);
-		crear.setBounds(60, 232, 315, 83);
-		crear.setToolTipText("Ingresar a creacion de apostadores");
+		crear.setBounds(60, 262, 315, 83);
+		crear.setToolTipText("Ingresar a Creacion de Apostadores");
 		add(crear);
 		
 		buscar = new JButton();
 		buscar.setOpaque(false);
-		buscar.setBounds(420, 232, 315, 83);
-		buscar.setToolTipText("Ingresar a buscar de apostadores");
+		buscar.setBounds(420, 262, 315, 83);
+		buscar.setToolTipText("Ingresar a Buscar de Apostadores");
 		add(buscar);
 		
 		mostrar = new JButton();
 		mostrar.setOpaque(false);
-		mostrar.setBounds(775, 232, 315, 83);
-		mostrar.setToolTipText("Ingresar a mostrar de apostadores");
+		mostrar.setBounds(775, 262, 315, 83);
+		mostrar.setToolTipText("Ingresar a Mostrar de Apostadores");
 		add(mostrar);
 		
 		actualizar = new JButton();
 		actualizar.setOpaque(false);
-		actualizar.setBounds(243, 392, 315, 83);
-		actualizar.setToolTipText("Ingresar a actualizar de apostadores");
+		actualizar.setBounds(243, 422, 315, 83);
+		actualizar.setToolTipText("Ingresar a Actualizar de Apostadores");
 		add(actualizar);
 		
 		borrar = new JButton();
 		borrar.setOpaque(false);
-		borrar.setBounds(599, 392, 315, 83);
-		borrar.setToolTipText("Ingresar a borrar de apostadores");
+		borrar.setBounds(599, 422, 315, 83);
+		borrar.setToolTipText("Ingresar a Borrar de Apostadores");
 		add(borrar);
 		
 	}
@@ -80,61 +80,41 @@ public class VentanaApostadores extends JFrame{
 		return crear;
 	}
 
-
-
 	public void setCrear(JButton crear) {
 		this.crear = crear;
 	}
-
-
 
 	public JButton getBuscar() {
 		return buscar;
 	}
 
-
-
 	public void setBuscar(JButton buscar) {
 		this.buscar = buscar;
 	}
-
-
 
 	public JButton getMostrar() {
 		return mostrar;
 	}
 
-
-
 	public void setMostrar(JButton mostrar) {
 		this.mostrar = mostrar;
 	}
-
-
 
 	public JButton getActualizar() {
 		return actualizar;
 	}
 
-
-
 	public void setActualizar(JButton actualizar) {
 		this.actualizar = actualizar;
 	}
-
-
 
 	public JButton getBorrar() {
 		return borrar;
 	}
 
-
-
 	public void setBorrar(JButton borrar) {
 		this.borrar = borrar;
 	}
-
-
 
 	public JButton getRegresar() {
 		return regresar;

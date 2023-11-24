@@ -176,14 +176,13 @@ public class ReciboDAO implements CRUDOperation{
 		}
 		return print;
 	}
-	public String getLastRecibo(String cedula) {
+	public ReciboDTO getLastRecibo(String cedula) {
 		ArrayList<ReciboDTO> propRecibos = new ArrayList<>();
 		for (ReciboDTO o : recibos) {
 			if(Long.parseLong(cedula)==o.getCedula()) {
 				propRecibos.add(o);
 			}
 		}
-		String print = propRecibos.get(propRecibos.size()-1).toString();
-		return print;
+		return propRecibos.get(propRecibos.size()-1);
 	}
 }

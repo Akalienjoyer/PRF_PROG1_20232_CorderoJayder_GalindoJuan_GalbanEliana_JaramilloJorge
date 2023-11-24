@@ -36,4 +36,3 @@ public class VentanaTablaSedes extends JFrame{
           getContentPane().add(scrollPane, BorderLayout.CENTER);
 	}
 }
-

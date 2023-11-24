@@ -2,10 +2,14 @@ package co.edu.unbosque.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.color.ColorSpace;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -13,8 +17,10 @@ import javax.swing.JTextField;
 public class VentanaRegistroAtributos extends JFrame{
 
 	private JButton ingresar, regresar;
-	private JTextField nombreCompleto, cedula, sedeJuego, direccion, celular;
+	private JTextField nombreCompleto, cedula, direccion, celular;
 	private JLabel imagenFondo;
+	private JComboBox<String> sedeJuego;
+    private String[] localidadesBogota = {"Chapinero", "Usaquén", "Kennedy", "Suba", "Fontibón", "Engativá", "Teusaquillo", "Santa Fe"};
 
 	public VentanaRegistroAtributos() {
 		
@@ -52,13 +58,11 @@ public class VentanaRegistroAtributos extends JFrame{
 		cedula.setToolTipText("Ingresa la Cedula"); 
 		add(cedula);
 		
-		sedeJuego = new JTextField();
-		sedeJuego.setBorder(null); 
-		sedeJuego.setFont(new Font("Nue Gothic", Font.PLAIN, 18)); 
-		sedeJuego.setBackground(new java.awt.Color(0, 0, 0, 1));
-		sedeJuego.setBounds(196, 332, 328, 50);
-		sedeJuego.setToolTipText("Ingresa la Sede del Juego"); 
-		add(sedeJuego);
+		sedeJuego = new JComboBox<>(localidadesBogota); 
+        sedeJuego.setFont(new Font("Nue Gothic", Font.PLAIN, 18));
+        sedeJuego.setBounds(181, 332, 336, 50);
+        sedeJuego.setToolTipText("Selecciona la Sede del Juego");
+        add(sedeJuego);
 		
 		direccion = new JTextField();
 		direccion.setBorder(null); 
@@ -126,14 +130,6 @@ public class VentanaRegistroAtributos extends JFrame{
 		this.cedula = cedula;
 	}
 
-	public JTextField getSedeJuego() {
-		return sedeJuego;
-	}
-
-	public void setSedeJuego(JTextField sedeJuego) {
-		this.sedeJuego = sedeJuego;
-	}
-
 	public JTextField getDireccion() {
 		return direccion;
 	}
@@ -157,5 +153,20 @@ public class VentanaRegistroAtributos extends JFrame{
 	public void setImagenFondo(JLabel imagenFondo) {
 		this.imagenFondo = imagenFondo;
 	}
-	
+
+	public JComboBox<String> getSedeJuego() {
+		return sedeJuego;
+	}
+
+	public void setSedeJuego(JComboBox<String> sedeJuego) {
+		this.sedeJuego = sedeJuego;
+	}
+
+	public String[] getLocalidadesBogota() {
+		return localidadesBogota;
+	}
+
+	public void setLocalidadesBogota(String[] localidadesBogota) {
+		this.localidadesBogota = localidadesBogota;
+	}
 }

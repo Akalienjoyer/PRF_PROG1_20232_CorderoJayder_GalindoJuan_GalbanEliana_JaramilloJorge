@@ -32,8 +32,8 @@ public class VentanaCasa extends JFrame{
 		regresar.setBounds(-4, 660, 120, 30);
 		regresar.setToolTipText("Regresa al Menu Anterior");
 		add(regresar);
-		
-        imagenFondo = new JLabel();
+
+		imagenFondo = new JLabel();
 		imagenFondo.setBounds(0, 0, getWidth(), getHeight());
 		Image temp;
 		temp = new ImageIcon("src/Imagenes/GestionCasa.png").getImage();
@@ -43,17 +43,18 @@ public class VentanaCasa extends JFrame{
 		imagenFondo.setIcon(img);
 		add(imagenFondo);
 		
-		editar = new JButton();
-		editar.setOpaque(false); 
-		editar.setBounds(600, 261, 470, 160);
-		editar.setToolTipText("Editar datos");
-		add(editar);
-		
 		mostrar = new JButton();
 		mostrar.setOpaque(false); 
-		mostrar.setBounds(65, 261, 470, 160);
-		mostrar.setToolTipText("Mostrar datos");
+		mostrar.setBounds(156, 410, 405, 135);
+		mostrar.setToolTipText("Mostrar Datos");
 		add(mostrar);
+		
+		editar = new JButton();
+		editar.setOpaque(false); 
+		editar.setBounds(606, 410, 405, 135);
+		editar.setToolTipText("Editar Datos");
+		add(editar);
+		
 	}
 
 	public JButton getEditar() {

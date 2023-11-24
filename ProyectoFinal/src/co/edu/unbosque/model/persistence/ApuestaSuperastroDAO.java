@@ -8,12 +8,14 @@ import co.edu.unbosque.model.ApuestaSuperastroDTO;
 public class ApuestaSuperastroDAO implements CRUDOperation{
 
 	private ArrayList<ApuestaSuperastroDTO> superastros;
+	private ArrayList<ApuestaSuperastroDTO> carritoSuperastro;
 	private final String SERIAL_FILENAME = "apuestas-superastro.dat";
 	
 	/**
 	 * Constructor que inicializa la lista superastros
 	 */
 	public ApuestaSuperastroDAO() {
+		carritoSuperastro = new ArrayList<>();
 		superastros = new ArrayList<>();
 		loadSerializable();
 	}
@@ -72,6 +74,7 @@ public class ApuestaSuperastroDAO implements CRUDOperation{
 	 */
 	@Override
 	public String readAll() {
+		
 		String print = "";
 		int index = 0;
 		for (ApuestaSuperastroDTO s : superastros) {
@@ -220,5 +223,19 @@ public class ApuestaSuperastroDAO implements CRUDOperation{
 				return 1;
 			}
 			return 2;
+	}
+	public void addCarrito() {
+		carritoSuperastro.add(superastros.get(superastros.size()-1));
+		writeSerializable();
+	}
+	public ArrayList<ApuestaSuperastroDTO> returnCarrito() {
+		return carritoSuperastro;
+	}
+	public void deleteCarrito() {
+		int x = carritoSuperastro.size();
+		for (int i = 0; i < x; i++) {
+			carritoSuperastro.remove(0);
+		}
+		writeSerializable();
 	}
 }

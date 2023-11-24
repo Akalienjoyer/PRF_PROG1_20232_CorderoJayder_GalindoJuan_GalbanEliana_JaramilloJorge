@@ -2,18 +2,19 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-import co.edu.unbosque.model.ApuestaBetPlayDTO;
 import co.edu.unbosque.model.ApuestaChanceDTO;
 
 public class ApuestaChanceDAO implements CRUDOperation{
 
 	ArrayList<ApuestaChanceDTO> chances;
+	ArrayList<ApuestaChanceDTO> carritoChances;
 	private final String SERIAL_FILENAME = "apuestas-chance.dat";
 	
 	/**
 	 * Constructor que inicializa la lista chances
 	 */
 	public ApuestaChanceDAO() {
+		carritoChances = new ArrayList<>();
 		chances = new ArrayList<>();
 		loadSerializable();
 	}
@@ -220,5 +221,17 @@ public class ApuestaChanceDAO implements CRUDOperation{
 				return 1;
 			}
 			return 2;
+	}
+	public void addCarrito() {
+		carritoChances.add(chances.get(chances.size()-1));
+		writeSerializable();
+	}
+	public ArrayList<ApuestaChanceDTO> returnCarrito() {
+		return carritoChances;
+	}
+	public void deleteCarrito() {
+		for (ApuestaChanceDTO o : carritoChances) {
+			carritoChances.remove(o);
+		}
 	}
 }

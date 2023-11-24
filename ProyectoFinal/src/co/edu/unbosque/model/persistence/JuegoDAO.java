@@ -354,4 +354,16 @@ public class JuegoDAO implements CRUDOperation{
 		}
 		return print;
 	}
+	
+	public ArrayList<JuegoDTO> returnLits(){
+		return juegos;
+	}
+	
+	public boolean checkBudget(String data1, String data2, String data3, String data4, String data5, String total) {
+		if((Float.parseFloat(data1)+Float.parseFloat(data2)+Float.parseFloat(data3)+
+				Float.parseFloat(data4)+Float.parseFloat(data5))==Float.parseFloat(total)) {
+			return true;
+		}
+		return false;
+	}
 }

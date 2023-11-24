@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 public class VentanaSeleccionAdministrador extends JFrame{
 
-	private JButton gestionesAdmin, facturarApuesta, generarRecibo, regresar;
+	private JButton gestionesAdmin, facturarApuesta, generarRecibo, consultas, regresar;
 	private JLabel imagenFondo;
 	
 	public VentanaSeleccionAdministrador() {
@@ -47,21 +47,27 @@ public class VentanaSeleccionAdministrador extends JFrame{
 		
 		facturarApuesta = new JButton();
 		facturarApuesta.setOpaque(false); 
-		facturarApuesta.setBounds(700, 248, 262, 69);
+		facturarApuesta.setBounds(700, 217, 262, 69);
 		facturarApuesta.setToolTipText("Facturar Apuesta");
 		add(facturarApuesta);
 		
 		gestionesAdmin = new JButton();
 		gestionesAdmin.setOpaque(false); 
-		gestionesAdmin.setBounds(700, 335, 262, 69);
+		gestionesAdmin.setBounds(700, 306, 262, 69);
 		gestionesAdmin.setToolTipText("Mas Gestiones de Administrador");
 		add(gestionesAdmin);
 		
 		generarRecibo = new JButton();
 		generarRecibo.setOpaque(false); 
-		generarRecibo.setBounds(700, 421, 262, 69);
+		generarRecibo.setBounds(700, 390, 262, 69);
 		generarRecibo.setToolTipText("Generar Recibo General");
 		add(generarRecibo);
+		
+		consultas = new JButton();
+		consultas.setOpaque(false); 
+		consultas.setBounds(700, 478, 262, 69);
+		consultas.setToolTipText("Mostrar Consultas Independientes");
+		add(consultas);
 		
 	}
 
@@ -89,6 +95,14 @@ public class VentanaSeleccionAdministrador extends JFrame{
 		this.generarRecibo = generarRecibo;
 	}
 
+	public JButton getConsultas() {
+		return consultas;
+	}
+
+	public void setConsultas(JButton consultas) {
+		this.consultas = consultas;
+	}
+
 	public JButton getRegresar() {
 		return regresar;
 	}
@@ -104,5 +118,5 @@ public class VentanaSeleccionAdministrador extends JFrame{
 	public void setImagenFondo(JLabel imagenFondo) {
 		this.imagenFondo = imagenFondo;
 	}
-	
+
 }

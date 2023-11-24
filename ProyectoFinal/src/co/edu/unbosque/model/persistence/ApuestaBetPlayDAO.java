@@ -2,12 +2,12 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-import co.edu.unbosque.model.ApuestaBalotoDTO;
 import co.edu.unbosque.model.ApuestaBetPlayDTO;
 
 public class ApuestaBetPlayDAO implements CRUDOperation{
 
 	private ArrayList<ApuestaBetPlayDTO> betPlays;
+	private ArrayList<ApuestaBetPlayDTO> carritoBetPlays;
 	private final String SERIAL_FILENAME = "apuestas-betplay.dat";
 	
 	/**
@@ -211,5 +211,12 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 				return 1;
 			}
 			return 2;
+	}
+	public void addCarrito() {
+		carritoBetPlays.add(betPlays.get(betPlays.size()-1));
+		writeSerializable();
+	}
+	public ArrayList<ApuestaBetPlayDTO> returnCarrito() {
+		return carritoBetPlays;
 	}
 }

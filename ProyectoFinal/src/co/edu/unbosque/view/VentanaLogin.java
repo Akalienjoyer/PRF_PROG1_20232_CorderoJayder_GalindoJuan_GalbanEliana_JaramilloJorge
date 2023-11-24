@@ -92,7 +92,7 @@ public class VentanaLogin extends JFrame {
 		return campoUsuario;
 	}
 
-	public void setCampoUsuario(JTextFieldFondo campoUsuario) {
+	public void setCampoUsuario(JTextField campoUsuario) {
 		this.campoUsuario = campoUsuario;
 	}
 
