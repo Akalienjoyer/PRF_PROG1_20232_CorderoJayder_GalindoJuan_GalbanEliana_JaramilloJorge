@@ -238,4 +238,29 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 		}
 		writeSerializable();
 	}
+	public ArrayList<ApuestaBalotoDTO> returnBySede(String sede){
+		ArrayList<ApuestaBalotoDTO> propBalotos = new ArrayList<>();
+		for (ApuestaBalotoDTO o : balotos) {
+			if(o.getNombre().equals(sede)) {
+				propBalotos.add(o);
+			}
+		}
+		return propBalotos;
+	}
+	public ArrayList<ApuestaBalotoDTO> returnByClient(String cedula){
+		ArrayList<ApuestaBalotoDTO> propBalotos = new ArrayList<>();
+		for (ApuestaBalotoDTO o : balotos) {
+			if(o.getCedula()==Long.parseLong(cedula)) {
+				propBalotos.add(o);
+			}
+		}
+		return propBalotos;
+	}
+	public float returnTotalBetGame() {
+		float exit = 0;
+		for (ApuestaBalotoDTO o : balotos) {
+			exit+=o.getValorApuesta();
+		}
+		return exit;
+	}
 }

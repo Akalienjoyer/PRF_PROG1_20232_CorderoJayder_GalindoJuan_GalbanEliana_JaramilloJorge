@@ -36,7 +36,6 @@ import co.edu.unbosque.util.UnvalidNameException;
 import co.edu.unbosque.util.UnvalidSerieFormatException;
 import co.edu.unbosque.view.VentanaActualizarSede;
 import co.edu.unbosque.view.VentanaApostadores;
-import co.edu.unbosque.view.VentanaApuestasTotales;
 import co.edu.unbosque.view.VentanaBaloto;
 import co.edu.unbosque.view.VentanaBetplay;
 import co.edu.unbosque.view.VentanaBuscarActualizarApostador;
@@ -47,6 +46,10 @@ import co.edu.unbosque.view.VentanaConsultas;
 import co.edu.unbosque.view.VentanaCreacionApostador;
 import co.edu.unbosque.view.VentanaCrearSede;
 import co.edu.unbosque.view.VentanaDetalleApuestas;
+import co.edu.unbosque.view.VentanaBuscarDetalleApuestas;
+import co.edu.unbosque.view.VentanaBuscarDetalleApuestasCliente;
+import co.edu.unbosque.view.VentanaBuscarDetallerApuestasJuego;
+import co.edu.unbosque.view.VentanaBuscarDetallerApuestasSede;
 import co.edu.unbosque.view.VentanaFacturarSuperastro;
 import co.edu.unbosque.view.VentanaEditarCasa;
 import co.edu.unbosque.view.VentanaFacturarApuesta;
@@ -81,7 +84,7 @@ import co.edu.unbosque.view.VentanaSuperAstro;
 import co.edu.unbosque.view.VentanaTablaApostadores;
 import co.edu.unbosque.view.VentanaTablaJuegos;
 import co.edu.unbosque.view.VentanaTablaSedes;
-import co.edu.unbosque.view.VentanaTablaTotalApuestas;
+import co.edu.unbosque.view.VentanaTotalApuestas;
 import co.edu.unbosque.view.VentanaTragaMoneda;
 import co.edu.unbosque.view.VentanaInicioUsuario;
 import co.edu.unbosque.view.VentanaJuegos;
@@ -168,10 +171,15 @@ public class Controller implements ActionListener {
 	private VentanaTablaRecibo vRecibo;
 	private VentanaConsultas vSeleccionConsultas;
 	private VentanaClientesSede vClientesSede;
-	private VentanaApuestasTotales vApuestasTotales;
-	private VentanaDetalleApuestas vDetalleApuestas;
-	private VentanaTablaTotalApuestas vTotalApuestas;
-
+	private VentanaBuscarDetalleApuestas vDetalleApuestas;
+	private VentanaBuscarDetalleApuestas vDetalleApuestas2;
+	private VentanaTotalApuestas vTotalApuestas;
+	private VentanaBuscarDetallerApuestasSede vDetallesSede;
+	private VentanaBuscarDetallerApuestasSede vDetallesSede2;
+	private VentanaDetalleApuestas vDetallesApuestaSede;
+	private VentanaBuscarDetalleApuestasCliente vDetalleCliente;
+	private VentanaBuscarDetallerApuestasJuego vDetalleJuego;
+	
 	private VentanaBuscarClientePorSede vClientePorSede;
 	private VentanaBuscarApuestaTotalCliente vTotalCliente;
 	
@@ -249,11 +257,17 @@ public class Controller implements ActionListener {
 		
 		// CONSULTAS
 		vSeleccionConsultas = new VentanaConsultas();
-		vApuestasTotales = new VentanaApuestasTotales();
-		vDetalleApuestas = new VentanaDetalleApuestas();
+		vDetalleApuestas = new VentanaBuscarDetalleApuestas("buscar");
+		
+		vDetalleApuestas2 = new VentanaBuscarDetalleApuestas("buscar");
+		vDetallesSede2 = new VentanaBuscarDetallerApuestasSede("buscar");
+		
 		vClientePorSede = new VentanaBuscarClientePorSede("buscar");
 		vTotalCliente = new VentanaBuscarApuestaTotalCliente("buscar");
+		vDetallesSede = new VentanaBuscarDetallerApuestasSede("buscar");
+		vDetalleCliente = new VentanaBuscarDetalleApuestasCliente("buscar");
 		
+		vDetalleJuego = new VentanaBuscarDetallerApuestasJuego("buscar");
 		// FACTURAR APUESTA
 		vFacturar = new VentanaFacturarApuesta();
 		vFacturarSuperastro = new VentanaFacturarSuperastro();
@@ -267,7 +281,7 @@ public class Controller implements ActionListener {
 
 	}
 
-	public void run() {
+	public void run() {		
 		vPrincipal.setVisible(true);
 	}
 
@@ -584,6 +598,48 @@ public class Controller implements ActionListener {
 		
 		vTotalCliente.getIngresar().addActionListener(this);
 		vTotalCliente.getIngresar().setActionCommand("vTotalClienteIngresar");
+		
+		vDetalleApuestas.getsede().addActionListener(this);
+		vDetalleApuestas.getsede().setActionCommand("vDetalletApuestasSede");
+		
+		vDetalleApuestas.getApostador().addActionListener(this);
+		vDetalleApuestas.getApostador().setActionCommand("vDetalletApuestasApostador");
+		
+		vDetalleApuestas.getRegresar().addActionListener(this);
+		vDetalleApuestas.getRegresar().setActionCommand("vDetalletApuestasRegresar");
+		
+		vDetalleApuestas2.getsede().addActionListener(this);
+		vDetalleApuestas2.getsede().setActionCommand("vTotalApuestasSede");
+		
+		vDetalleApuestas2.getApostador().addActionListener(this);
+		vDetalleApuestas2.getApostador().setActionCommand("vTotalApuestasJuego");
+		
+		vDetalleApuestas2.getRegresar().addActionListener(this);
+		vDetalleApuestas2.getRegresar().setActionCommand("vTotalApuestasRegresar");
+		
+		vDetallesSede.getRegresar().addActionListener(this);
+		vDetallesSede.getRegresar().setActionCommand("vDetallesSedeRegresar");
+		
+		vDetallesSede.getIngresar().addActionListener(this);
+		vDetallesSede.getIngresar().setActionCommand("vDetallesSedeIngresar");
+		
+		vDetallesSede2.getRegresar().addActionListener(this);
+		vDetallesSede2.getRegresar().setActionCommand("vTotalSedeRegresar");
+		
+		vDetallesSede2.getIngresar().addActionListener(this);
+		vDetallesSede2.getIngresar().setActionCommand("vTotalSedeIngresar");
+		
+		vDetalleCliente.getRegresar().addActionListener(this);
+		vDetalleCliente.getRegresar().setActionCommand("vDetallerClienteRegresar");
+		
+		vDetalleCliente.getIngresar().addActionListener(this);
+		vDetalleCliente.getIngresar().setActionCommand("vDetallerClienteIngresar");
+		
+		vDetalleJuego.getRegresar().addActionListener(this);
+		vDetalleJuego.getRegresar().setActionCommand("vTotalJuegoRegresar");
+		
+		vDetalleJuego.getIngresar().addActionListener(this);
+		vDetalleJuego.getIngresar().setActionCommand("vTotalJuegoIngresar");
 		
 		// VENTANA DE GESTION JUEGOS 
 		
@@ -998,22 +1054,145 @@ public class Controller implements ActionListener {
 				allInOrder = false;
 			}
 			if(allInOrder) {
-				vTotalApuestas = new VentanaTablaTotalApuestas(Float.toString(apuestaDAO.returnTotalBet(cedula)));
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaDAO.returnTotalBet(cedula)));
 				vTotalApuestas.setVisible(true);
 			}
 			break;
 		}
 		
 		case "vConsultasDetalleApuestas": {
+			vSeleccionConsultas.setVisible(false);
 			vDetalleApuestas.setVisible(true);
 			break;
 		}
 		
+		case "vDetalletApuestasRegresar":{
+			vDetalleApuestas.setVisible(false);
+			vSeleccionConsultas.setVisible(true);
+			break;
+		}
+		case "vDetalletApuestasSede":{
+			vDetalleApuestas.setVisible(false);
+			vDetallesSede.setVisible(true);
+			break;
+		}
+		case "vDetalletApuestasApostador":{
+			vDetalleApuestas.setVisible(false);
+			vDetalleCliente.setVisible(true);
+			break;
+		}
+		case "vDetallerClienteRegresar":{
+			vDetalleCliente.setVisible(false);
+			vDetalleApuestas.setVisible(true);
+			break;
+		}
+		case "vDetallerClienteIngresar":{
+			boolean allInOrder = true;
+			String cedula = vDetalleCliente.getcedula().getText();
+			try {
+				Long.parseLong(cedula);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(vDetalleCliente, "La cedula solo consiste de numeros.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				vDetalleCliente.getcedula().setText("");
+				allInOrder = false;
+			}
+			if(apostadorDAO.checkCedula(cedula)) {
+				JOptionPane.showMessageDialog(vDetalleCliente, "No existe esta cedula en el sistema.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				vDetalleCliente.getcedula().setText("");
+				allInOrder = false;
+			}
+			if(cedula.isEmpty()||cedula.isBlank()) {
+				JOptionPane.showMessageDialog(vDetalleCliente, "Digite todos los datos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				vDetalleCliente.getcedula().setText("");
+				allInOrder = false;
+			}
+			if(allInOrder) {
+			vDetallesApuestaSede = new VentanaDetalleApuestas(apuestaDAO.getAllBets(apuestaBalotoDAO.returnByClient(cedula), 
+			apuestaLoteriaDAO.returnByClient(cedula), apuestaSuperastroDAO.returnByClient(cedula), apuestaChanceDAO.returnByClient(cedula)
+					,apuestaBetPlayDAO.returnByClient(cedula)));
+			vDetallesApuestaSede.setVisible(true);
+			}
+			break;
+		}
+		case "vDetallesSedeRegresar":{
+			vDetallesSede.setVisible(false);
+			vDetalleApuestas.setVisible(true);
+			break;
+		}
+		case "vDetallesSedeIngresar":{
+			String sede = vDetallesSede.getUbicacion().getSelectedItem().toString();
+			if (sedeDAO.getSede(sede) != null) {
+				vDetallesApuestaSede = new VentanaDetalleApuestas(apuestaDAO.getAllBets(apuestaBalotoDAO.returnBySede(sede), 
+						apuestaLoteriaDAO.returnBySede(sede), apuestaSuperastroDAO.returnBySede(sede), apuestaChanceDAO.returnBySede(sede)
+						,apuestaBetPlayDAO.returnBySede(sede)));
+				vDetallesApuestaSede.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(vDetallesSede, "No existe una sede en esta ubicacion.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			break;
+		}
 		case "vConsultasTotalApuestas": {
-			vTotalApuestas.setVisible(true);
+			vSeleccionConsultas.setVisible(false);
+			vDetalleApuestas2.setVisible(true);
 			break;
 		}
 		
+		case "vTotalApuestasRegresar":{
+			vDetalleApuestas2.setVisible(false);
+			vSeleccionConsultas.setVisible(true);
+			break;
+		}
+		case "vTotalApuestasSede":{
+			vDetalleApuestas2.setVisible(false);
+			vDetallesSede2.setVisible(true);
+			break;
+		}
+		case "vTotalApuestasJuego":{
+			vDetalleApuestas2.setVisible(false);
+			vDetalleJuego.setVisible(true);
+			break;
+		}
+		case "vTotalSedeRegresar":{
+			vDetallesSede2.setVisible(false);
+			vDetalleApuestas2.setVisible(true);
+			break;
+		}
+		case "vTotalSedeIngresar":{
+			String sede = vDetallesSede2.getUbicacion().getSelectedItem().toString();
+			if (sedeDAO.getSede(sede) != null) {
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaDAO.returnTotalBetSede(sede)));
+				vTotalApuestas.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(vDetallesSede, "No existe una sede en esta ubicacion.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			break;
+		}
+		case "vTotalJuegoRegresar":{
+			vDetalleJuego.setVisible(false);
+			vDetalleApuestas2.setVisible(true);
+			break;
+		}
+		case "vTotalJuegoIngresar":{
+			String juego = vDetalleJuego.getjuego().getSelectedItem().toString();
+			if(juego.equals("Baloto")) {
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaBalotoDAO.returnTotalBetGame()));
+			}else if(juego.equals("BetPlay")) {
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaBetPlayDAO.returnTotalBetGame()));
+			}else if(juego.equals("Loteria")) {
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaLoteriaDAO.returnTotalBetGame()));
+			}else if(juego.equals("SuperAstro")) {
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaSuperastroDAO.returnTotalBetGame()));
+			}else if(juego.equals("Chance")) {
+				vTotalApuestas = new VentanaTotalApuestas(Float.toString(apuestaChanceDAO.returnTotalBetGame()));
+			}
+			vTotalApuestas.setVisible(true);
+			break;
+		}
 		case "vSeleccionConsultasRegresar": {
 			vSeleccionConsultas.setVisible(false);
 			vSeleccionAdmin.setVisible(true);

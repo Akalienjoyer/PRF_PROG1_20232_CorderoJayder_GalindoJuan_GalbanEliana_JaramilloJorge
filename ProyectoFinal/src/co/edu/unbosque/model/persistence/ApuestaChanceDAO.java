@@ -2,6 +2,8 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
+import co.edu.unbosque.model.ApuestaBalotoDTO;
+import co.edu.unbosque.model.ApuestaBetPlayDTO;
 import co.edu.unbosque.model.ApuestaChanceDTO;
 
 public class ApuestaChanceDAO implements CRUDOperation{
@@ -235,5 +237,30 @@ public class ApuestaChanceDAO implements CRUDOperation{
 			carritoChances.remove(0);
 		}
 		writeSerializable();
+	}
+	public ArrayList<ApuestaChanceDTO> returnBySede(String sede){
+		ArrayList<ApuestaChanceDTO> propChances = new ArrayList<>();
+		for (ApuestaChanceDTO o : chances) {
+			if(o.getNombre().equals(sede)) {
+				propChances.add(o);
+			}
+		}
+		return propChances;
+	}
+	public ArrayList<ApuestaChanceDTO> returnByClient(String cedula){
+		ArrayList<ApuestaChanceDTO> propChances = new ArrayList<>();
+		for (ApuestaChanceDTO o : chances) {
+			if(o.getCedula()==Long.parseLong(cedula)) {
+				propChances.add(o);
+			}
+		}
+		return propChances;
+	}
+	public float returnTotalBetGame() {
+		float exit = 0;
+		for (ApuestaChanceDTO o : chances) {
+			exit+=o.getValorApuesta();
+		}
+		return exit;
 	}
 }

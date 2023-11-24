@@ -15,13 +15,40 @@ import co.edu.unbosque.model.ApuestaSuperastroDTO;
 public class ApuestaDAO implements CRUDOperation{
 
 	private ArrayList<ApuestaDTO> apuestas;
+	private final String SERIAL_FILENAME = "apuestas.dat";
 	
 	/**
 	 * Constructor que inicializa la lista apuestas
 	 */
 	public ApuestaDAO() {
 		apuestas = new ArrayList<>();
+		loadSerializable();
 	}
+	/**
+	 * Carga los datos del archivo serealizado al codigo
+	 * fuente para su uso en las funciones
+	 */
+	@SuppressWarnings("unchecked")
+	private void loadSerializable() {
+		if (FileHandler.serializableOpenAndReadFile(SERIAL_FILENAME) != null) {
+			Object temp = FileHandler.serializableOpenAndReadFile(SERIAL_FILENAME);
+			apuestas = (ArrayList<ApuestaDTO>) temp;
+		} else {
+			apuestas= new ArrayList<>();
+		}
+	}
+	/**
+	 * Sobreescribe los datos serealizados con los datos de los objetos
+	 * en la lista juegos
+	 */
+	public void writeSerializable() {
+		FileHandler.serializableOpenAndWriteFile(SERIAL_FILENAME, apuestas);
+	}
+	/**
+	 * Creacion de un objeto para ingresarlo en la lista juegos
+	 * Toma como parametros los argumentos con los valores
+	 * de los atributos de un objeto juego
+	 */
 	@Override
 	public void create(String... args) {
 		ApuestaDTO temp = new ApuestaDTO();
@@ -30,6 +57,7 @@ public class ApuestaDAO implements CRUDOperation{
 		temp.setDiaSemana(args[2]);
 		temp.setValorApuesta(Double.parseDouble(args[3]));
 		apuestas.add(temp);
+		writeSerializable();
 	}
 	/**
 	 * Creacion de un objeto para ingresarlo en la lista apuestas
@@ -38,6 +66,7 @@ public class ApuestaDAO implements CRUDOperation{
 	@Override
 	public void create(Object o) {
 		apuestas.add((ApuestaDTO)o);
+		writeSerializable();
 	}
 	/**
 	 * Muestra todos los elementos de la lista. Se muestran sus
@@ -74,6 +103,7 @@ public class ApuestaDAO implements CRUDOperation{
 			if(!args[3].isBlank()||!args[3].isEmpty())
 				apuestas.get(index).setValorApuesta(Double.parseDouble(args[3]));
 		}
+		writeSerializable();
 		return true;
 	}
 	/**
@@ -89,6 +119,7 @@ public class ApuestaDAO implements CRUDOperation{
 			}
 		}
 		apuestas.set(index, (ApuestaDTO) o);
+		writeSerializable();
 	}
 	/**
 	 * Delete toma el indice index y elimina el objeto de esa posicion
@@ -100,6 +131,7 @@ public class ApuestaDAO implements CRUDOperation{
 			return false;
 		else {
 			apuestas.remove(index);
+			writeSerializable();
 			return true;
 		}
 	}
@@ -113,6 +145,7 @@ public class ApuestaDAO implements CRUDOperation{
 		if (o == null)
 			return false;
 		else if (apuestas.remove((ApuestaDTO) o)) {
+			writeSerializable();
 			return true;
 		} else {
 			return false;
@@ -152,4 +185,15 @@ public class ApuestaDAO implements CRUDOperation{
 		}
 		return exit;
 	}
+	
+	public float returnTotalBetSede(String sede) {
+		float exit = 0;
+		for (ApuestaDTO o : apuestas) {
+			if(o.getNombre().equals(sede)) {
+				exit+=o.getValorApuesta();
+			}
+		}
+		return exit;
+	}
+	
 }

@@ -2,7 +2,9 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
+import co.edu.unbosque.model.ApuestaBalotoDTO;
 import co.edu.unbosque.model.ApuestaChanceDTO;
+import co.edu.unbosque.model.ApuestaLoteriaDTO;
 import co.edu.unbosque.model.ApuestaSuperastroDTO;
 
 public class ApuestaSuperastroDAO implements CRUDOperation{
@@ -237,5 +239,30 @@ public class ApuestaSuperastroDAO implements CRUDOperation{
 			carritoSuperastro.remove(0);
 		}
 		writeSerializable();
+	}
+	public ArrayList<ApuestaSuperastroDTO> returnBySede(String sede){
+		ArrayList<ApuestaSuperastroDTO> propSuperA = new ArrayList<>();
+		for (ApuestaSuperastroDTO o : superastros) {
+			if(o.getNombre().equals(sede)) {
+				propSuperA.add(o);
+			}
+		}
+		return propSuperA;
+	}
+	public ArrayList<ApuestaSuperastroDTO> returnByClient(String cedula){
+		ArrayList<ApuestaSuperastroDTO> propSuperA = new ArrayList<>();
+		for (ApuestaSuperastroDTO o : superastros) {
+			if(o.getCedula()==Long.parseLong(cedula)) {
+				propSuperA.add(o);
+			}
+		}
+		return propSuperA;
+	}
+	public float returnTotalBetGame() {
+		float exit = 0;
+		for (ApuestaSuperastroDTO o : superastros) {
+			exit+=o.getValorApuesta();
+		}
+		return exit;
 	}
 }
