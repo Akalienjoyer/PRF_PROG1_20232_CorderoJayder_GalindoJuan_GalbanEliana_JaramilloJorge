@@ -18,6 +18,7 @@ public class VentanaTablaJuegos extends JFrame{
     	
     	setBounds(500,80,742,633);
     	setResizable(false);
+		setLocationRelativeTo(null);
     	setTitle("Registro de existencias - ");
     	setDefaultCloseOperation(HIDE_ON_CLOSE);
     	

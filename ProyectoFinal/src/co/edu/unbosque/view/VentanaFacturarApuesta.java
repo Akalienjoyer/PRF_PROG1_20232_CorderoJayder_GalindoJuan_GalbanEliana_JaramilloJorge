@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 public class VentanaFacturarApuesta extends JFrame{
 	
-	private JButton baloto, superAstro, chance, loteria, gachapon, betplay, tragaMonedas, volverInicio;
+	private JButton baloto, superAstro, chance, loteria, betplay, volverInicio;
 	private JLabel imagenFondo;
 	
 	public VentanaFacturarApuesta() {
@@ -23,7 +23,7 @@ public class VentanaFacturarApuesta extends JFrame{
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
         setUndecorated(true);
         
-        volverInicio = new JButton("INICIO");
+        volverInicio = new JButton("REGRESAR");
 		volverInicio.setFont(new Font("Nue Gothic", 1, 20));
 		volverInicio.setForeground(Color.WHITE);
 		volverInicio.setBackground(new Color(200, 200, 200));
@@ -37,7 +37,7 @@ public class VentanaFacturarApuesta extends JFrame{
 		imagenFondo = new JLabel();
 		imagenFondo.setBounds(0, 0, getWidth(), getHeight());
 		Image temp;
-		temp = new ImageIcon("src/Imagenes/SelectorJuegos.png").getImage();
+		temp = new ImageIcon("src/Imagenes/SelectorFacturar.png").getImage();
 		ImageIcon img;
 		img = new ImageIcon(
 				temp.getScaledInstance(imagenFondo.getWidth(), imagenFondo.getHeight(), Image.SCALE_SMOOTH));
@@ -46,45 +46,34 @@ public class VentanaFacturarApuesta extends JFrame{
 		
 		baloto = new JButton();
 		baloto.setOpaque(false); 
-		baloto.setBounds(95, 249, 135, 145);
+		baloto.setBounds(51, 245, 195, 359);
 		baloto.setToolTipText("Ingresar al juego 'BALOTO'");
 		add(baloto);
 		
 		superAstro = new JButton();
 		superAstro.setOpaque(false); 
-		superAstro.setBounds(369, 249, 135, 145);
+		superAstro.setBounds(264, 245, 195, 359);
 		superAstro.setToolTipText("Ingresar al juego 'SUPER ASTRO'");
 		add(superAstro);
 		
+		betplay = new JButton();
+		betplay.setOpaque(false); 
+		betplay.setBounds(477, 245, 195, 359);
+		betplay.setToolTipText("Ingresar al juego 'BETPLAY'");
+		add(betplay);
+		
 		chance = new JButton();
 		chance.setOpaque(false); 
-		chance.setBounds(639, 249, 135, 145);
+		chance.setBounds(690, 245, 195, 359);
 		chance.setToolTipText("Ingresar al juego 'CHANCE'");
 		add(chance);
 		
 		loteria = new JButton();
 		loteria.setOpaque(false); 
-		loteria.setBounds(912, 249, 135, 145);
+		loteria.setBounds(903, 245, 195, 359);
 		loteria.setToolTipText("Ingresar al juego 'LOTERIA'");
 		add(loteria);
 		
-		gachapon = new JButton();
-		gachapon.setOpaque(false); 
-		gachapon.setBounds(230, 406, 135, 145);
-		gachapon.setToolTipText("Ingresar al juego 'GACHAPON'");
-		add(gachapon);
-		
-		betplay = new JButton();
-		betplay.setOpaque(false); 
-		betplay.setBounds(500, 410, 135, 145);
-		betplay.setToolTipText("Ingresar al juego 'BETPLAY'");
-		add(betplay);
-		
-		tragaMonedas = new JButton();
-		tragaMonedas.setOpaque(false); 
-		tragaMonedas.setBounds(772, 408, 135, 145);
-		tragaMonedas.setToolTipText("Ingresar al juego 'TRAGA MONEDAS'");
-		add(tragaMonedas);
 	}
 
 	public JButton getBaloto() {
@@ -119,28 +108,12 @@ public class VentanaFacturarApuesta extends JFrame{
 		this.loteria = loteria;
 	}
 
-	public JButton getGachapon() {
-		return gachapon;
-	}
-
-	public void setGachapon(JButton gachapon) {
-		this.gachapon = gachapon;
-	}
-
 	public JButton getBetplay() {
 		return betplay;
 	}
 
 	public void setBetplay(JButton betplay) {
 		this.betplay = betplay;
-	}
-
-	public JButton getTragaMonedas() {
-		return tragaMonedas;
-	}
-
-	public void setTragaMonedas(JButton tragaMonedas) {
-		this.tragaMonedas = tragaMonedas;
 	}
 
 	public JButton getVolverInicio() {
@@ -158,5 +131,4 @@ public class VentanaFacturarApuesta extends JFrame{
 	public void setImagenFondo(JLabel imagenFondo) {
 		this.imagenFondo = imagenFondo;
 	}
-	
 }

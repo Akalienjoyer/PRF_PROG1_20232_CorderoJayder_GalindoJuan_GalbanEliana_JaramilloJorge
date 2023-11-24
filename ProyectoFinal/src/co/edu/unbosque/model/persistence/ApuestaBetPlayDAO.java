@@ -15,6 +15,7 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 	 */
 	public ApuestaBetPlayDAO() {
 		betPlays = new ArrayList<>();
+		carritoBetPlays = new ArrayList<>();
 		loadSerializable();
 	}
 	/**
@@ -218,5 +219,12 @@ public class ApuestaBetPlayDAO implements CRUDOperation{
 	}
 	public ArrayList<ApuestaBetPlayDTO> returnCarrito() {
 		return carritoBetPlays;
+	}
+	public void deleteCarrito() {
+		int x = carritoBetPlays.size();
+		for (int i = 0; i < x; i++) {
+			carritoBetPlays.remove(0);
+		}
+		writeSerializable();
 	}
 }

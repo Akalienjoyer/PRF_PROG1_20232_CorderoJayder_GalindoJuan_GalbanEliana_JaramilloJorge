@@ -50,7 +50,7 @@ public class VentanaBuscarForRecibo extends JFrame{
 		imagenFondo = new JLabel();
 		imagenFondo.setBounds(0, 0, getWidth(), getHeight());
 		Image temp;
-		temp = new ImageIcon("src/Imagenes/BuscarApostador.png").getImage();
+		temp = new ImageIcon("src/Imagenes/CedularRecibo.png").getImage();
 		ImageIcon img;
 		img = new ImageIcon(
 				temp.getScaledInstance(imagenFondo.getWidth(), imagenFondo.getHeight(), Image.SCALE_SMOOTH));

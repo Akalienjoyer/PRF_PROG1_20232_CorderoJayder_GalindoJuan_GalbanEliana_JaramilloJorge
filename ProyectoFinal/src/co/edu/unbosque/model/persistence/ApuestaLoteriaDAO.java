@@ -15,6 +15,7 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 	 */
 	public ApuestaLoteriaDAO() {
 		loterias = new ArrayList<>();
+		carritoLoterias = new ArrayList<>();
 		loadSerializable();
 	}
 	/**
@@ -230,5 +231,12 @@ public class ApuestaLoteriaDAO implements CRUDOperation{
 	}
 	public ArrayList<ApuestaLoteriaDTO> returnCarrito() {
 		return carritoLoterias;
+	}
+	public void deleteCarrito() {
+		int x = carritoLoterias.size();
+		for (int i = 0; i < x; i++) {
+			carritoLoterias.remove(0);
+		}
+		writeSerializable();
 	}
 }

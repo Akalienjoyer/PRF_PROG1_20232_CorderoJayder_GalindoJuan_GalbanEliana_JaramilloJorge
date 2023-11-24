@@ -13,6 +13,7 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 	 * Constructor que inicializa la lista balotos
 	 */
 	public ApuestaBalotoDAO() {
+		carritoBalotos = new ArrayList<>();
 		balotos = new ArrayList<>();
 		loadSerializable();
 	}
@@ -229,5 +230,12 @@ private final String SERIAL_FILENAME = "apuestas-baloto.dat";
 	}
 	public ArrayList<ApuestaBalotoDTO> returnCarrito() {
 		return carritoBalotos;
+	}
+	public void deleteCarrito() {
+		int x = carritoBalotos.size();
+		for (int i = 0; i < x; i++) {
+			carritoBalotos.remove(0);
+		}
+		writeSerializable();
 	}
 }

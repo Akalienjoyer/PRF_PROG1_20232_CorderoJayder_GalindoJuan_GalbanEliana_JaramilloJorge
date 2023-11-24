@@ -253,6 +253,11 @@ public class ApostadorDAO implements CRUDOperation{
 		return null;
 	}
 	public boolean checkCedula(String cedula) {
+		try {
+			Long.parseLong(cedula);
+		} catch (NumberFormatException e) {
+			return true;
+		}
 		boolean unique = true;
 		for (ApostadorDTO o : apostadores) {
 			if(o.getCedula()==Long.parseLong(cedula))

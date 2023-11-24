@@ -230,8 +230,10 @@ public class ApuestaChanceDAO implements CRUDOperation{
 		return carritoChances;
 	}
 	public void deleteCarrito() {
-		for (ApuestaChanceDTO o : carritoChances) {
-			carritoChances.remove(o);
+		int x = carritoChances.size();
+		for (int i = 0; i < x; i++) {
+			carritoChances.remove(0);
 		}
+		writeSerializable();
 	}
 }
